@@ -1,12 +1,12 @@
 <template>
-  <div id="app">
+  <v-app>
     <div class="main-container">
       <div class="center">
-        <paint-canvas />
-        <camera-toolbox />
+        <paint-canvas :cameraData="cameraData" />
+        <camera-toolbox :cameraData="cameraData" />
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -19,8 +19,17 @@ export default {
   name: "App",
   components: {
     PaintCanvas,
-    CameraToolbox,
+    CameraToolbox
   },
+  data() {
+    return {
+      cameraData: {
+        x: 0,
+        y: 0,
+        z: 2
+      }
+    };
+  }
 };
 </script>
 

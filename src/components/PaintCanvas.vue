@@ -8,6 +8,13 @@ import * as Three from "three";
 export default {
   name: "PaintCanvas",
 
+  props: {
+    cameraData: {
+      type: Object,
+      required: true
+    }
+  },
+
   data() {
     return {
       camera: null,
@@ -22,6 +29,17 @@ export default {
     this.animate();
   },
 
+  watch: {
+    cameraData: {
+      deep: true,
+      handler(data) {
+        this.camera.position.x = data.x;
+        this.camera.position.y = data.y;
+        this.camera.position.z = data.z;
+      }
+    }
+  },
+
   methods: {
     init() {
       const container = this.$refs.container;
@@ -30,9 +48,9 @@ export default {
         70,
         container.clientWidth / container.clientHeight,
         0.01,
-        10
+        100
       );
-      this.camera.position.z = 1;
+      this.camera.position.z = this.cameraData.z;
 
       this.scene = new Three.Scene();
 
