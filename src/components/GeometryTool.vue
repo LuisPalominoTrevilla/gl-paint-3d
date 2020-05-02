@@ -1,6 +1,6 @@
 <template>
   <v-btn class="toolBtn" v-on:click="draw(name)">
-    {{ name }}
+    <font-awesome-icon icon="user-secret" />
   </v-btn>
 </template>
 
