@@ -3,15 +3,15 @@
     <div class="tool-row" v-for="(n, a) in 3" :key="a">
       <div class="tool">
         <GeometryTool
-          :name="Tools[a * 2].name"
-          :imgSrc="Tools[a * 2].img"
+          :name="tools[a * 2].name"
+          :imgSrc="tools[a * 2].img"
           @draw="draw"
         />
       </div>
       <div class="tool">
         <GeometryTool
-          :name="Tools[a * 2 + 1].name"
-          :imgSrc="Tools[a * 2 + 1].img"
+          :name="tools[a * 2 + 1].name"
+          :imgSrc="tools[a * 2 + 1].img"
           @draw="draw"
         />
       </div>
@@ -29,7 +29,7 @@ export default {
 
   data: function() {
     return {
-      Tools: [
+      tools: [
         {
           name: 'Cube',
           img:

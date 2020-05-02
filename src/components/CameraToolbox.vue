@@ -1,15 +1,25 @@
 <template>
   <div class="card camera-toolbox">
-    <v-slider v-model="panX" min="-100" max="100" label="Pan X"></v-slider>
-    <v-slider v-model="panY" min="-100" max="100" label="Pan Y"></v-slider>
-    <v-slider v-model="zoom" min="-100" max="100" label="Zoom"></v-slider>
+    <div class="horizontal">
+      <v-slider v-model="panX" min="-100" max="100" label="Pan X"></v-slider>
+      <v-slider v-model="zoom" min="-100" max="100" label="Zoom"></v-slider>
+    </div>
+    <div class="vertical">
+      <v-slider
+        v-model="panY"
+        min="-100"
+        max="100"
+        label="Pan Y"
+        :vertical="true"
+      ></v-slider>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    cameraData: {
+    camera: {
       type: Object,
       required: true
     }
@@ -23,26 +33,26 @@ export default {
   computed: {
     panX: {
       get() {
-        return this.cameraData.x / this.stepFactor;
+        return this.camera.position.x / this.stepFactor;
       },
       set(val) {
-        this.cameraData.x = val * this.stepFactor;
+        this.camera.position.x = val * this.stepFactor;
       }
     },
     panY: {
       get() {
-        return this.cameraData.y / this.stepFactor;
+        return this.camera.position.y / this.stepFactor;
       },
       set(val) {
-        this.cameraData.y = val * this.stepFactor;
+        this.camera.position.y = val * this.stepFactor;
       }
     },
     zoom: {
       get() {
-        return this.cameraData.z / this.zoomFactor;
+        return this.camera.position.z / this.zoomFactor;
       },
       set(val) {
-        this.cameraData.z = val * this.zoomFactor;
+        this.camera.position.z = val * this.zoomFactor;
       }
     }
   }
@@ -51,6 +61,16 @@ export default {
 
 <style lang="scss" scoped>
 .camera-toolbox {
+  display: flex;
+  justify-content: space-around;
   width: 100%;
+
+  .horizontal {
+    flex-grow: 2;
+  }
+
+  .vertical {
+    flex-grow: 1;
+  }
 }
 </style>

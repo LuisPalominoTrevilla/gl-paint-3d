@@ -9,7 +9,7 @@ export default {
   name: 'PaintCanvas',
 
   props: {
-    cameraData: {
+    camera: {
       type: Object,
       required: true
     },
@@ -21,7 +21,6 @@ export default {
 
   data() {
     return {
-      camera: null,
       scene: null,
       renderer: null,
       mesh: null,
@@ -35,34 +34,16 @@ export default {
     this.animate();
   },
 
-  watch: {
-    cameraData: {
-      deep: true,
-      handler(data) {
-        this.camera.position.x = data.x;
-        this.camera.position.y = data.y;
-        this.camera.position.z = data.z;
-      }
-    }
-  },
-
   methods: {
     init() {
       const container = this.$refs.container;
-
-      this.camera = new Three.PerspectiveCamera(
-        70,
-        container.clientWidth / container.clientHeight,
-        0.01,
-        100
-      );
-      this.camera.position.z = this.cameraData.z;
+      this.camera.position.z = 2;
       this.scene = new Three.Scene();
       this.mesh = [];
       this.raycaster = new Three.Raycaster();
       this.mouse = new Three.Vector2(-10, -10);
       this.renderer = new Three.WebGLRenderer({ antialias: true });
-      this.renderer.setSize(container.clientWidth, container.clientHeight);
+      this.renderer.setSize(700, 600);
       container.appendChild(this.renderer.domElement);
       container.addEventListener('mousemove', this.onMouseMove, false);
     },
@@ -129,8 +110,8 @@ export default {
       let x = event.clientX;
       let y = event.clientY;
       var rect = event.target.getBoundingClientRect();
-      var xClipp = (2 * (x - rect.left)) / this.$refs.container.clientWidth - 1;
-      var yClipp = (2 * (rect.top - y)) / this.$refs.container.clientHeight + 1;
+      var xClipp = (2 * (x - rect.left)) / 700 - 1;
+      var yClipp = (2 * (rect.top - y)) / 600 + 1;
       this.mouse.x = xClipp;
       this.mouse.y = yClipp;
     }
@@ -138,9 +119,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-#container {
-  width: 700px;
-  height: 600px;
-}
-</style>
+<style lang="scss" scoped></style>

@@ -1,6 +1,6 @@
 <template>
   <v-btn class="toolBtn" v-on:click="draw(name)">
-    <v-img :src="imgSrc" class="toolImg" contain></v-img>
+    {{ name }}
   </v-btn>
 </template>
 

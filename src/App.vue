@@ -5,12 +5,8 @@
         <geometry-toolbox @draw="draw" />
       </div>
       <div class="center">
-        <paint-canvas
-          :cameraData="cameraData"
-          :geometries="geometries"
-          ref="canvas"
-        />
-        <camera-toolbox :cameraData="cameraData" />
+        <paint-canvas :camera="camera" :geometries="geometries" ref="canvas" />
+        <camera-toolbox :camera="camera" />
       </div>
     </div>
   </v-app>
@@ -20,6 +16,7 @@
 import PaintCanvas from './components/PaintCanvas';
 import CameraToolbox from './components/CameraToolbox';
 import GeometryToolbox from './components/GeometryToolbox';
+import * as Three from 'three';
 import './styles/index.scss';
 
 export default {
@@ -31,13 +28,22 @@ export default {
   },
   data() {
     return {
-      cameraData: {
-        x: 0,
-        y: 0,
-        z: 2
-      },
+      camera: null,
+      canvasDimensions: {},
       geometries: []
     };
+  },
+  beforeMount() {
+    this.canvasDimensions = {
+      width: 700,
+      height: 600
+    };
+    this.camera = new Three.PerspectiveCamera(
+      70,
+      this.canvasDimensions.width / this.canvasDimensions.height,
+      0.01,
+      100
+    );
   },
   methods: {
     draw: function(name) {
