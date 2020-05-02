@@ -2,9 +2,9 @@
   <v-app>
     <div class="main-container">
       <div class="left">
-        <geometry-toolbox/>
+        <geometry-toolbox />
       </div>
-      <div class="center">  
+      <div class="center">
         <paint-canvas :cameraData="cameraData" />
         <camera-toolbox :cameraData="cameraData" />
       </div>
@@ -15,7 +15,7 @@
 <script>
 import PaintCanvas from "./components/PaintCanvas";
 import CameraToolbox from "./components/CameraToolbox";
-import GeometryToolbox from './components/GeometryToolbox';
+import GeometryToolbox from "./components/GeometryToolbox";
 import "./styles/index.scss";
 
 export default {
@@ -23,7 +23,7 @@ export default {
   components: {
     PaintCanvas,
     CameraToolbox,
-    GeometryToolbox,
+    GeometryToolbox
   },
   data() {
     return {
@@ -53,11 +53,13 @@ export default {
 
   .center {
     display: flex;
+    flex: 2;
     flex-direction: column;
+    align-items: center;
     justify-content: space-around;
   }
   .left {
-    width: 1%;
+    flex: 1;
   }
 }
 </style>

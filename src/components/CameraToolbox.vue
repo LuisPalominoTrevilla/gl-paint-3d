@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card camera-toolbox">
     <v-slider v-model="panX" min="-100" max="100" label="Pan X"></v-slider>
     <v-slider v-model="panY" min="-100" max="100" label="Pan Y"></v-slider>
     <v-slider v-model="zoom" min="-100" max="100" label="Zoom"></v-slider>
@@ -48,3 +48,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.camera-toolbox {
+  width: 100%;
+}
+</style>

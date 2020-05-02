@@ -1,22 +1,28 @@
 <template>
-    <v-container class="toolbox">
-            <v-card class="d-flex pa-0" 
-            outlined
-            tiled
-            v-for="a in 3"
-            :key="a"
-            >
-                <v-card class="tool"
-                outlined
-                tile
-                >
-                    cube
-                </v-card>
-                <v-card class="tool"
-                outlined
-                tile>
-                    sphere
-                </v-card>
-            </v-card>
-    </v-container>
+  <div class="toolbox card">
+    <div class="tool-row" v-for="a in 3" :key="a">
+      <div class="tool">
+        cube
+      </div>
+      <div class="tool">
+        sphere
+      </div>
+    </div>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.toolbox {
+  display: flex;
+  flex-direction: column;
+}
+
+.tool-row {
+  display: flex;
+  justify-content: space-around;
+
+  .tool {
+    padding: 8px;
+  }
+}
+</style>
