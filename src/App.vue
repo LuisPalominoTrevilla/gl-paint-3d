@@ -2,10 +2,14 @@
   <v-app>
     <div class="main-container">
       <div class="left">
-        <geometry-toolbox @draw="draw"/>
+        <geometry-toolbox @draw="draw" />
       </div>
       <div class="center">
-        <paint-canvas :cameraData="cameraData" :geometries="geometries" ref="canvas" />
+        <paint-canvas
+          :cameraData="cameraData"
+          :geometries="geometries"
+          ref="canvas"
+        />
         <camera-toolbox :cameraData="cameraData" />
       </div>
     </div>
@@ -13,13 +17,13 @@
 </template>
 
 <script>
-import PaintCanvas from "./components/PaintCanvas";
-import CameraToolbox from "./components/CameraToolbox";
-import GeometryToolbox from "./components/GeometryToolbox";
-import "./styles/index.scss";
+import PaintCanvas from './components/PaintCanvas';
+import CameraToolbox from './components/CameraToolbox';
+import GeometryToolbox from './components/GeometryToolbox';
+import './styles/index.scss';
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     PaintCanvas,
     CameraToolbox,
@@ -32,12 +36,11 @@ export default {
         y: 0,
         z: 2
       },
-      geometries:[
-      ]
+      geometries: []
     };
   },
-  methods:{
-    draw: function(name){
+  methods: {
+    draw: function(name) {
       this.$refs.canvas.addFigure(name);
     }
   }
