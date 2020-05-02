@@ -16,6 +16,10 @@ export default {
     geometries: {
       type: Array,
       required: true
+    },
+    canvasDimensions: {
+      type: Object,
+      required: true
     }
   },
 
@@ -43,7 +47,10 @@ export default {
       this.raycaster = new Three.Raycaster();
       this.mouse = new Three.Vector2(-10, -10);
       this.renderer = new Three.WebGLRenderer({ antialias: true });
-      this.renderer.setSize(700, 600);
+      this.renderer.setSize(
+        this.canvasDimensions.width,
+        this.canvasDimensions.height
+      );
       container.appendChild(this.renderer.domElement);
       container.addEventListener('mousemove', this.onMouseMove, false);
     },
@@ -110,8 +117,8 @@ export default {
       let x = event.clientX;
       let y = event.clientY;
       var rect = event.target.getBoundingClientRect();
-      var xClipp = (2 * (x - rect.left)) / 700 - 1;
-      var yClipp = (2 * (rect.top - y)) / 600 + 1;
+      var xClipp = (2 * (x - rect.left)) / this.canvasDimensions.width - 1;
+      var yClipp = (2 * (rect.top - y)) / this.canvasDimensions.height + 1;
       this.mouse.x = xClipp;
       this.mouse.y = yClipp;
     }

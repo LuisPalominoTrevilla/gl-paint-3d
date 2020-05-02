@@ -5,7 +5,12 @@
         <geometry-toolbox @draw="draw" />
       </div>
       <div class="center">
-        <paint-canvas :camera="camera" :geometries="geometries" ref="canvas" />
+        <paint-canvas
+          :canvasDimensions="canvasDimensions"
+          :camera="camera"
+          :geometries="geometries"
+          ref="canvas"
+        />
         <camera-toolbox :camera="camera" />
       </div>
     </div>
@@ -35,8 +40,8 @@ export default {
   },
   beforeMount() {
     this.canvasDimensions = {
-      width: 700,
-      height: 600
+      width: 800,
+      height: 550
     };
     this.camera = new Three.PerspectiveCamera(
       70,
@@ -60,7 +65,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 1rem;
 }
 
 .main-container {
