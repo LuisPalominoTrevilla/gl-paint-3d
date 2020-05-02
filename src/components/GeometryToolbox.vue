@@ -2,9 +2,7 @@
   <div class="toolbox card">
     <v-row>
       <v-col cols="6" v-for="geometry in geometries" :key="geometry">
-        <div class="tool">
-          <GeometryTool :geometry="geometry" @draw="draw" />
-        </div>
+        <GeometryTool class="geometry" :geometry="geometry" @draw="draw" />
       </v-col>
     </v-row>
   </div>
@@ -34,9 +32,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.tool {
-  padding: 8px;
-  display: flex;
-  flex: 1;
+.geometry {
+  width: 100%;
 }
 </style>
