@@ -51,8 +51,8 @@ export default {
     );
   },
   methods: {
-    draw: function(name) {
-      this.$refs.canvas.addFigure(name);
+    draw: function(geometry) {
+      this.$refs.canvas.addFigure(geometry);
     }
   }
 };

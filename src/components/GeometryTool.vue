@@ -1,5 +1,5 @@
 <template>
-  <v-btn class="toolBtn" v-on:click="draw(name)">
+  <v-btn class="toolBtn" v-on:click="draw">
     <font-awesome-icon icon="user-secret" />
   </v-btn>
 </template>
@@ -7,18 +7,14 @@
 <script>
 export default {
   props: {
-    imgSrc: {
-      type: String,
-      required: true
-    },
-    name: {
-      type: String,
+    geometry: {
+      type: Number,
       required: true
     }
   },
   methods: {
-    draw: function(name) {
-      this.$emit('draw', name);
+    draw() {
+      this.$emit('draw', this.geometry);
     }
   }
 };

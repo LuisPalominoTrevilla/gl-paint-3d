@@ -4,6 +4,7 @@
 
 <script>
 import * as Three from 'three';
+import Constants from '../constants';
 
 export default {
   name: 'PaintCanvas',
@@ -64,9 +65,9 @@ export default {
       }
       this.renderer.render(this.scene, this.camera);
     },
-    addFigure(Figure) {
-      switch (Figure) {
-        case 'Cube': {
+    addFigure(geometry) {
+      switch (geometry) {
+        case Constants.geometries.cube: {
           let geometry = new Three.BoxGeometry(0.2, 0.2, 0.2);
           let material = new Three.MeshBasicMaterial();
           let fig = new Three.Mesh(geometry, material);
@@ -76,7 +77,7 @@ export default {
           break;
         }
 
-        case 'Sphere': {
+        case Constants.geometries.sphere: {
           let geometry = new Three.SphereGeometry(0.2, 9, 9);
           let material = new Three.MeshBasicMaterial();
           let fig = new Three.Mesh(geometry, material);
@@ -86,7 +87,7 @@ export default {
           break;
         }
 
-        case 'Cone': {
+        case Constants.geometries.cone: {
           let geometry = new Three.ConeGeometry(0.2, 0.5, 0.5);
           let material = new Three.MeshBasicMaterial();
           let fig = new Three.Mesh(geometry, material);
@@ -96,7 +97,7 @@ export default {
           break;
         }
 
-        case 'Plane': {
+        case Constants.geometries.plane: {
           let geometry = new Three.PlaneGeometry(1, 1, 1, 1);
           let material = new Three.MeshBasicMaterial();
           let fig = new Three.Mesh(geometry, material);
@@ -108,7 +109,7 @@ export default {
           break;
         }
         default:
-          console.log('Hello from ' + Figure);
+          console.log('Hello from ' + geometry);
           break;
       }
     },
