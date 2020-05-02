@@ -1,7 +1,10 @@
 <template>
   <v-app>
     <div class="main-container">
-      <div class="center">
+      <div class="left">
+        <geometry-toolbox/>
+      </div>
+      <div class="center">  
         <paint-canvas :cameraData="cameraData" />
         <camera-toolbox :cameraData="cameraData" />
       </div>
@@ -12,14 +15,15 @@
 <script>
 import PaintCanvas from "./components/PaintCanvas";
 import CameraToolbox from "./components/CameraToolbox";
-
+import GeometryToolbox from './components/GeometryToolbox';
 import "./styles/index.scss";
 
 export default {
   name: "App",
   components: {
     PaintCanvas,
-    CameraToolbox
+    CameraToolbox,
+    GeometryToolbox,
   },
   data() {
     return {
@@ -51,6 +55,9 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+  }
+  .left {
+    width: 1%;
   }
 }
 </style>
