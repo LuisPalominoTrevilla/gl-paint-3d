@@ -1,13 +1,12 @@
 <template>
   <div class="toolbox card">
-    <div class="tool-row" v-for="(n, a) in 3" :key="a">
-      <div class="tool">
-        <GeometryTool :geometry="geometries[a * 2]" @draw="draw" />
-      </div>
-      <div class="tool">
-        <GeometryTool :geometry="geometries[a * 2 + 1]" @draw="draw" />
-      </div>
-    </div>
+    <v-row>
+      <v-col cols="6" v-for="geometry in geometries" :key="geometry">
+        <div class="tool">
+          <GeometryTool :geometry="geometry" @draw="draw" />
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -35,19 +34,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.toolbox {
+.tool {
+  padding: 8px;
   display: flex;
-  flex-direction: column;
-}
-
-.tool-row {
-  display: flex;
-  justify-content: space-around;
-
-  .tool {
-    padding: 8px;
-    display: flex;
-    flex: 1;
-  }
+  flex: 1;
 }
 </style>

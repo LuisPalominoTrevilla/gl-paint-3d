@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import vuetify from './plugins/vuetify';
-import './plugins/font-awesome';
+import './plugins/fontawesome';
 
 Vue.config.productionTip = false;
 
