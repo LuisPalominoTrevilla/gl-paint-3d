@@ -2,10 +2,10 @@
   <v-app>
     <div class="main-container">
       <div class="left">
-        <geometry-toolbox />
+        <geometry-toolbox @draw="draw"/>
       </div>
       <div class="center">
-        <paint-canvas :cameraData="cameraData" />
+        <paint-canvas :cameraData="cameraData" :geometries="geometries" ref="canvas" />
         <camera-toolbox :cameraData="cameraData" />
       </div>
     </div>
@@ -31,8 +31,15 @@ export default {
         x: 0,
         y: 0,
         z: 2
-      }
+      },
+      geometries:[
+      ]
     };
+  },
+  methods:{
+    draw: function(name){
+      this.$refs.canvas.addFigure(name);
+    }
   }
 };
 </script>

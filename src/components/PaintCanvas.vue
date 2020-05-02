@@ -12,6 +12,10 @@ export default {
     cameraData: {
       type: Object,
       required: true
+    },
+    geometries:{
+      type: Array,
+      required: true
     }
   },
 
@@ -20,7 +24,9 @@ export default {
       camera: null,
       scene: null,
       renderer: null,
-      mesh: null
+      mesh: null,
+      mouse:null,
+      raycaster:null,
     };
   },
 
@@ -51,24 +57,83 @@ export default {
         100
       );
       this.camera.position.z = this.cameraData.z;
-
       this.scene = new Three.Scene();
-
-      let geometry = new Three.BoxGeometry(0.2, 0.2, 0.2);
-      let material = new Three.MeshNormalMaterial();
-
-      this.mesh = new Three.Mesh(geometry, material);
-      this.scene.add(this.mesh);
-
+      this.mesh=[];
+      this.raycaster = new Three.Raycaster();
+      this.mouse = new Three.Vector2(-10.,-10.);
       this.renderer = new Three.WebGLRenderer({ antialias: true });
       this.renderer.setSize(container.clientWidth, container.clientHeight);
       container.appendChild(this.renderer.domElement);
+      container.addEventListener('mousemove',this.onMouseMove,false);
     },
     animate() {
       requestAnimationFrame(this.animate);
-      this.mesh.rotation.x += 0.01;
-      this.mesh.rotation.y += 0.02;
+      this.raycaster.setFromCamera(this.mouse,this.camera);
+
+      var intersects = this.raycaster.intersectObjects(this.scene.children);
+      for ( var i = 0; i < intersects.length; i++ ) {
+        intersects[i].object.material.color.set( 0XC44F36 );
+    		
+	  }
       this.renderer.render(this.scene, this.camera);
+    },
+    addFigure(Figure){
+      switch(Figure){
+        case "Cube":{
+          let geometry = new Three.BoxGeometry(0.2,0.2,0.2);
+          let material = new Three.MeshBasicMaterial();
+          let fig= new Three.Mesh(geometry,material);
+          fig.position.set(-0.4,0.4,0.);
+          this.mesh.push(fig);
+          this.scene.add(fig);
+          break;
+          }
+
+        case "Sphere":{
+          let geometry = new Three.SphereGeometry( 0.2, 9, 9 );
+          let material = new Three.MeshBasicMaterial();
+          let fig= new Three.Mesh(geometry,material);
+          fig.position.set(0.,0.4,0.);
+          this.mesh.push(fig);
+          this.scene.add(fig);
+          break;
+          }
+
+        case "Cone":{
+          let geometry = new Three.ConeGeometry(0.2,0.5,0.5);
+          let material = new Three.MeshBasicMaterial();
+          let fig= new Three.Mesh(geometry,material);
+          fig.position.set(-0.4,0.,0.);
+          this.mesh.push(fig);
+          this.scene.add(fig);
+          break;
+          }
+
+        case "Plane":{
+          let geometry = new Three.PlaneGeometry(1,1,1,1);
+          let material = new Three.MeshBasicMaterial();
+          let fig= new Three.Mesh(geometry,material);
+          fig.rotation.x = -0.55 * Math.PI; 
+          fig.position.set(0.,-0.2,0.5);
+          this.mesh.push(fig);
+          this.scene.add(fig);
+
+          break;
+          }
+        default:
+          console.log("Hello from "+Figure);
+          break;
+      }
+    },
+
+    onMouseMove(event){
+      let x=event.clientX;
+      let y=event.clientY;
+      var rect = event.target.getBoundingClientRect();
+      var xClipp = 2 * (x - rect.left) / this.$refs.container.clientWidth - 1;
+	    var yClipp = 2 * (rect.top - y) / this.$refs.container.clientHeight + 1;
+      this.mouse.x = xClipp;
+      this.mouse.y = yClipp;
     }
   }
 };
