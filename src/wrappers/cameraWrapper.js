@@ -5,10 +5,25 @@ class CameraWrapper {
     this.camera = new Three.PerspectiveCamera(fovy, aspect, near, far);
     this.camera.position.z = initZ;
     this.animation = {
-      theta: 0,
       deltaTheta: 0.01,
       orbit: false
     };
+    this.setAnimationData();
+  }
+
+  setAnimationData() {
+    this.animation.r = Math.sqrt(
+      Math.pow(this.camera.position.x, 2) + Math.pow(this.camera.position.z, 2)
+    );
+    if (this.animation.r === 0) {
+      this.animation.theta = 0;
+    } else {
+      this.animation.theta = Math.acos(
+        this.camera.position.z / this.animation.r
+      );
+      if (this.camera.position.x < 0)
+        this.animation.theta = 2 * Math.PI - this.animation.theta;
+    }
   }
 
   getDegDeltaTheta() {
@@ -25,13 +40,12 @@ class CameraWrapper {
   }
 
   orbitStep() {
-    const x = 2 * Math.sin(this.animation.theta);
-    const z = 2 * Math.cos(this.animation.theta);
+    const x = this.animation.r * Math.sin(this.animation.theta);
+    const z = this.animation.r * Math.cos(this.animation.theta);
 
     this._incrementTheta();
 
-    this.camera.position.set(x, 0, z);
-    // TODO: use target data
+    this.camera.position.set(x, this.camera.position.y, z);
     this.camera.lookAt(0, 0, 0);
     this.camera.up.set(0, 1, 0);
   }

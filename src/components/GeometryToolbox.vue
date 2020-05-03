@@ -22,7 +22,7 @@ export default {
     GeometryTool
   },
 
-  data: function() {
+  data() {
     return {
       geometries: Object.keys(Constants.geometries),
       FigureIcon: Constants.geometries
@@ -30,7 +30,7 @@ export default {
   },
 
   methods: {
-    draw: function(name) {
+    draw(name) {
       this.$emit('draw', name);
     }
   }

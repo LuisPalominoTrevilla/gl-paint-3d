@@ -19,7 +19,7 @@
           <mode-selection
             :mode="appMode"
             :animationState="animationState"
-            @mode-change="appMode = $event"
+            @mode-change="modeChanged"
             @anim-state-change="animationState = $event"
           />
         </div>
@@ -75,8 +75,14 @@ export default {
     });
   },
   methods: {
-    draw: function(geometry) {
+    draw(geometry) {
       this.$refs.canvas.addFigure(geometry);
+    },
+    modeChanged(newMode) {
+      this.appMode = newMode;
+      if (newMode === Constants.appModes.animation) {
+        this.cameraWrapper.setAnimationData();
+      }
     }
   }
 };
