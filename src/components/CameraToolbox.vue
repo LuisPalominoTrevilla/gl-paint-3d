@@ -25,7 +25,11 @@
       <v-chip>
         Animation
       </v-chip>
-      <v-switch v-model="cameraAnimation.orbit" label="Orbit"></v-switch>
+      <v-switch
+        :readonly="isAnimationMode"
+        v-model="cameraAnimation.orbit"
+        label="Orbit"
+      ></v-switch>
     </div>
     <div class="vertical-sliders">
       <v-slider
