@@ -96,6 +96,7 @@
     <div class="vertical">
       <v-slider
         :readonly="isAnimationMode"
+        class="large-slider"
         v-model="panY"
         min="-300"
         max="300"
@@ -239,6 +240,10 @@ export default {
   .vertical {
     display: flex;
     flex: 3;
+
+    ::v-deep .v-slider {
+      height: 250px;
+    }
   }
 
   .input-group {
