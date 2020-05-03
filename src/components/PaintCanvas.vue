@@ -81,13 +81,12 @@ export default {
         for (var i = 0; i < intersects.length; i++) {
           intersects[i].object.material.color.set(0xc44f36);
         }
+        this.cameraWrapper.renderStep();
       } else if (
         this.appMode === Constants.appModes.animation &&
         this.animationState === Constants.animationStates.play
       ) {
-        if (this.cameraAnimation.orbit) {
-          this.cameraWrapper.orbitStep();
-        }
+        this.cameraWrapper.animationStep();
         // TODO: Animate all meshes
       }
       this.renderer.render(this.scene, this.camera);

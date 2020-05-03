@@ -45,7 +45,8 @@ class CameraWrapper {
       (this.animation.theta + this.animation.deltaTheta) % (2 * Math.PI);
   }
 
-  orbitStep() {
+  animationStep() {
+    if (!this.animation.orbit) return;
     const x = this.animation.r * Math.sin(this.animation.theta);
     const z = this.animation.r * Math.cos(this.animation.theta);
 
@@ -59,6 +60,13 @@ class CameraWrapper {
     }
     this.camera.up.set(0, 1, 0);
   }
+
+  renderStep() {
+    if (this.animation.fixedTarget) {
+      this.camera.lookAt(this.animation.target);
+    }
+  }
+
   // TODO: Reset animation
 }
 
