@@ -42,7 +42,6 @@ export default {
   methods: {
     init() {
       const container = this.$refs.container;
-      this.camera.position.z = 2;
       this.scene = new Three.Scene();
       this.mesh = [];
       this.raycaster = new Three.Raycaster();

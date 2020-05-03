@@ -1,7 +1,7 @@
 <template>
   <div class="card camera-toolbox">
     <div class="horizontal">
-      <v-slider v-model="panX" min="-100" max="100" label="Pan X"></v-slider>
+      <v-slider v-model="panX" min="-500" max="500" label="Pan X"></v-slider>
       <v-slider v-model="zoom" min="-100" max="100" label="Zoom"></v-slider>
       <v-slider v-model="yaw" min="-180" max="180" label="Yaw"></v-slider>
       <div class="input-group">
@@ -78,8 +78,8 @@
     <div class="vertical">
       <v-slider
         v-model="panY"
-        min="-100"
-        max="100"
+        min="-500"
+        max="500"
         label="Pan Y"
         :vertical="true"
       ></v-slider>
@@ -104,7 +104,7 @@ export default {
   },
   data() {
     return {
-      stepFactor: 0.01,
+      stepFactor: 0.08,
       zoomFactor: 0.3,
       newPosition: {},
       target: {}
