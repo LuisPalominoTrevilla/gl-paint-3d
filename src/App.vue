@@ -39,7 +39,7 @@ import PaintCanvas from './components/PaintCanvas';
 import CameraToolbox from './components/CameraToolbox';
 import GeometryToolbox from './components/GeometryToolbox';
 import ModeSelection from './components/ModeSelection';
-import CameraWrapper from './utils/cameraWrapper';
+import CameraWrapper from './wrappers/cameraWrapper';
 import Constants from './constants';
 
 import './styles/index.scss';
