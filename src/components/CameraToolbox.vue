@@ -25,11 +25,29 @@
       <v-chip>
         Animation
       </v-chip>
-      <v-switch
-        :readonly="isAnimationMode"
-        v-model="cameraAnimation.orbit"
-        label="Orbit"
-      ></v-switch>
+      <div class="d-flex justify-space-around mt-2">
+        <v-switch
+          :readonly="isAnimationMode"
+          v-model="cameraAnimation.orbit"
+          label="Orbit"
+        ></v-switch>
+        <div class="d-flex">
+          <v-text-field
+            v-model="deltaTheta"
+            class="number-input align-self-start"
+            label="deltaTheta"
+            hide-details="auto"
+            type="number"
+          />
+          <v-btn
+            :disabled="disableSetDeltaTheta"
+            class="white--text align-self-center ml-2"
+            color="blue darken-3"
+            @click="setDeltaTheta"
+            >Set</v-btn
+          >
+        </div>
+      </div>
     </div>
     <div class="vertical-sliders">
       <v-slider
@@ -144,7 +162,8 @@ export default {
       stepFactor: 0.08,
       zoomFactor: 0.3,
       newPosition: {},
-      target: {}
+      target: {},
+      deltaTheta: this.cameraWrapper.getDegDeltaTheta()
     };
   },
   computed: {
@@ -160,18 +179,21 @@ export default {
     disableSetPosition() {
       return (
         this.isAnimationMode ||
-        isNaN(this.newPosition.x) ||
-        isNaN(this.newPosition.y) ||
-        isNaN(this.newPosition.z)
+        isNaN(parseFloat(this.newPosition.x)) ||
+        isNaN(parseFloat(this.newPosition.y)) ||
+        isNaN(parseFloat(this.newPosition.z))
       );
     },
     disableSetTarget() {
       return (
         this.isAnimationMode ||
-        isNaN(this.target.x) ||
-        isNaN(this.target.y) ||
-        isNaN(this.target.z)
+        isNaN(parseFloat(this.target.x)) ||
+        isNaN(parseFloat(this.target.y)) ||
+        isNaN(parseFloat(this.target.z))
       );
+    },
+    disableSetDeltaTheta() {
+      return this.isAnimationMode || isNaN(parseFloat(this.deltaTheta));
     },
     panX: {
       get() {
@@ -238,6 +260,9 @@ export default {
         y: this.camera.position.y,
         z: this.camera.position.z
       };
+    },
+    setDeltaTheta() {
+      this.cameraWrapper.setDegDeltaTheta(this.deltaTheta);
     }
   }
 };

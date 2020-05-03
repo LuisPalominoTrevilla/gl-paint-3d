@@ -11,6 +11,14 @@ class CameraWrapper {
     };
   }
 
+  getDegDeltaTheta() {
+    return parseFloat(((this.animation.deltaTheta * 180) / Math.PI).toFixed(2));
+  }
+
+  setDegDeltaTheta(deg) {
+    this.animation.deltaTheta = (parseFloat(deg) * Math.PI) / 180;
+  }
+
   _incrementTheta() {
     this.animation.theta =
       (this.animation.theta + this.animation.deltaTheta) % (2 * Math.PI);
