@@ -1,7 +1,12 @@
 <template>
-  <v-btn class="toolBtn" v-on:click="draw">
-    <font-awesome-icon :icon="geometryIcon" />
-  </v-btn>
+  <v-tooltip bottom>
+    <template v-slot:activator="{ on }">
+      <v-btn class="toolBtn" v-on:click="draw" v-on="on">
+        <font-awesome-icon :icon="geometryIcon" />
+      </v-btn>
+    </template>
+    <span>{{name}}</span>
+  </v-tooltip>
 </template>
 
 <script>
@@ -9,6 +14,10 @@ import Constants from '../constants';
 
 export default {
   props: {
+    name:{
+      type: String,
+      required: true,
+    },
     geometry: {
       type: Number,
       required: true
@@ -18,7 +27,7 @@ export default {
     geometryIcon() {
       const icon = Constants.geometryIcon[this.geometry];
       return icon ? icon : 'brush';
-    }
+    },
   },
   methods: {
     draw() {

@@ -2,7 +2,7 @@
   <div class="toolbox card">
     <v-row>
       <v-col cols="6" v-for="geometry in geometries" :key="geometry">
-        <GeometryTool class="geometry" :geometry="geometry" @draw="draw" />
+        <GeometryTool class="geometry" :geometry="FigureIcon[geometry]" @draw="draw" :name="geometry"/>
       </v-col>
     </v-row>
   </div>
@@ -19,7 +19,8 @@ export default {
 
   data: function() {
     return {
-      geometries: Object.values(Constants.geometries)
+      geometries: Object.keys(Constants.geometries),
+      FigureIcon: Constants.geometries,
     };
   },
 

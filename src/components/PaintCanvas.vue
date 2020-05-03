@@ -108,6 +108,26 @@ export default {
 
           break;
         }
+
+        case Constants.geometries.cylinder:{
+          let geometry = new Three.CylinderGeometry( 0.5, 0.5, 2, 10 );
+          let material = new Three.MeshBasicMaterial();
+          let fig = new Three.Mesh( geometry, material );
+          fig.position.set(0.,0.,0.);
+          this.mesh.push(fig);
+          this.scene.add(fig);
+          break;
+        }
+
+        case Constants.geometries.icosahedron:{
+          let geometry = new Three.IcosahedronGeometry(0.4,0.);
+          let material = new Three.MeshBasicMaterial();
+          let fig = new Three.Mesh(geometry,material);
+          fig.position.set(0.4,0.,0.);
+          this.mesh.push(fig);
+          this.scene.add(fig);
+          break;
+        }
         default:
           console.log('Hello from ' + geometry);
           break;
