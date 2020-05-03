@@ -1,12 +1,30 @@
 <template>
   <div class="card camera-toolbox">
     <div class="horizontal">
-      <v-slider v-model="panX" min="-100" max="100" label="Pan X"></v-slider>
-      <v-slider v-model="zoom" min="-100" max="100" label="Zoom"></v-slider>
-      <v-slider v-model="yaw" min="-180" max="180" label="Yaw"></v-slider>
+      <v-slider
+        :readonly="isAnimationMode"
+        v-model="panX"
+        min="-500"
+        max="500"
+        label="Pan X"
+      ></v-slider>
+      <v-slider
+        :readonly="isAnimationMode"
+        v-model="zoom"
+        min="-100"
+        max="100"
+        label="Zoom"
+      ></v-slider>
+      <v-slider
+        :readonly="isAnimationMode"
+        v-model="yaw"
+        min="-180"
+        max="180"
+        label="Yaw"
+      ></v-slider>
       <div class="input-group">
         <v-chip label>
-          Position:
+          Position
         </v-chip>
         <v-text-field
           v-model="newPosition.x"
@@ -42,7 +60,7 @@
       </div>
       <div class="input-group">
         <v-chip label>
-          Target:
+          Target
         </v-chip>
         <v-text-field
           v-model="target.x"
@@ -77,13 +95,15 @@
     </div>
     <div class="vertical">
       <v-slider
+        :readonly="isAnimationMode"
         v-model="panY"
-        min="-100"
-        max="100"
+        min="-300"
+        max="300"
         label="Pan Y"
         :vertical="true"
       ></v-slider>
       <v-slider
+        :readonly="isAnimationMode"
         v-model="pitch"
         min="-180"
         max="180"
@@ -95,24 +115,34 @@
 </template>
 
 <script>
+import Constants from '../constants';
+
 export default {
   props: {
     camera: {
       type: Object,
       required: true
+    },
+    appMode: {
+      type: Number,
+      required: true
     }
   },
   data() {
     return {
-      stepFactor: 0.01,
+      stepFactor: 0.08,
       zoomFactor: 0.3,
       newPosition: {},
       target: {}
     };
   },
   computed: {
+    isAnimationMode() {
+      return this.appMode === Constants.appModes.animation;
+    },
     disableSetPosition() {
       return (
+        this.isAnimationMode ||
         isNaN(this.newPosition.x) ||
         isNaN(this.newPosition.y) ||
         isNaN(this.newPosition.z)
@@ -120,7 +150,10 @@ export default {
     },
     disableSetTarget() {
       return (
-        isNaN(this.target.x) || isNaN(this.target.y) || isNaN(this.target.z)
+        this.isAnimationMode ||
+        isNaN(this.target.x) ||
+        isNaN(this.target.y) ||
+        isNaN(this.target.z)
       );
     },
     panX: {
@@ -128,6 +161,7 @@ export default {
         return this.camera.position.x / this.stepFactor;
       },
       set(val) {
+        if (this.isAnimationMode) return;
         this.camera.position.x = val * this.stepFactor;
       }
     },
@@ -136,6 +170,7 @@ export default {
         return this.camera.position.y / this.stepFactor;
       },
       set(val) {
+        if (this.isAnimationMode) return;
         this.camera.position.y = val * this.stepFactor;
       }
     },
@@ -144,6 +179,7 @@ export default {
         return this.camera.position.z / this.zoomFactor;
       },
       set(val) {
+        if (this.isAnimationMode) return;
         this.camera.position.z = val * this.zoomFactor;
       }
     },
@@ -152,6 +188,7 @@ export default {
         return (this.camera.rotation.x * 180) / Math.PI;
       },
       set(deg) {
+        if (this.isAnimationMode) return;
         this.camera.rotation.x = (deg * Math.PI) / 180;
       }
     },
@@ -160,6 +197,7 @@ export default {
         return -(this.camera.rotation.y * 180) / Math.PI;
       },
       set(deg) {
+        if (this.isAnimationMode) return;
         this.camera.rotation.y = -(deg * Math.PI) / 180;
       }
     }

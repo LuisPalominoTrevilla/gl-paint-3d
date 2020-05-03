@@ -21,6 +21,14 @@ export default {
     canvasDimensions: {
       type: Object,
       required: true
+    },
+    appMode: {
+      type: Number,
+      required: true
+    },
+    animationState: {
+      type: Number,
+      required: true
     }
   },
 
@@ -30,7 +38,9 @@ export default {
       renderer: null,
       mesh: null,
       mouse: null,
-      raycaster: null
+      raycaster: null,
+      theta: 0,
+      deltaTheta: 0.01
     };
   },
 
@@ -42,7 +52,6 @@ export default {
   methods: {
     init() {
       const container = this.$refs.container;
-      this.camera.position.z = 2;
       this.scene = new Three.Scene();
       this.mesh = [];
       this.raycaster = new Three.Raycaster();
@@ -57,11 +66,26 @@ export default {
     },
     animate() {
       requestAnimationFrame(this.animate);
-      this.raycaster.setFromCamera(this.mouse, this.camera);
 
-      var intersects = this.raycaster.intersectObjects(this.scene.children);
-      for (var i = 0; i < intersects.length; i++) {
-        intersects[i].object.material.color.set(0xc44f36);
+      if (this.appMode === Constants.appModes.editing) {
+        this.raycaster.setFromCamera(this.mouse, this.camera);
+
+        var intersects = this.raycaster.intersectObjects(this.scene.children);
+        for (var i = 0; i < intersects.length; i++) {
+          intersects[i].object.material.color.set(0xc44f36);
+        }
+      } else if (
+        this.appMode === Constants.appModes.animation &&
+        this.animationState === Constants.animationStates.play
+      ) {
+        const x = 2 * Math.sin(this.theta);
+        const z = 2 * Math.cos(this.theta);
+        // TODO: module
+        this.theta += this.deltaTheta;
+        this.camera.position.set(x, 0, z);
+        // TODO: use target data
+        this.camera.lookAt(0, 0, 0);
+        this.camera.up.set(0, 1, 0);
       }
       this.renderer.render(this.scene, this.camera);
     },

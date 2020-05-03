@@ -9,9 +9,19 @@
           :canvasDimensions="canvasDimensions"
           :camera="camera"
           :geometries="geometries"
+          :appMode="appMode"
+          :animationState="animationState"
           ref="canvas"
         />
-        <camera-toolbox :camera="camera" />
+        <camera-toolbox :camera="camera" :appMode="appMode" />
+      </div>
+      <div class="right">
+        <mode-selection
+          :mode="appMode"
+          :animationState="animationState"
+          @mode-change="appMode = $event"
+          @anim-state-change="animationState = $event"
+        />
       </div>
     </div>
   </v-app>
@@ -21,6 +31,9 @@
 import PaintCanvas from './components/PaintCanvas';
 import CameraToolbox from './components/CameraToolbox';
 import GeometryToolbox from './components/GeometryToolbox';
+import ModeSelection from './components/ModeSelection';
+import Constants from './constants';
+
 import * as Three from 'three';
 import './styles/index.scss';
 
@@ -29,13 +42,16 @@ export default {
   components: {
     PaintCanvas,
     CameraToolbox,
-    GeometryToolbox
+    GeometryToolbox,
+    ModeSelection
   },
   data() {
     return {
       camera: null,
       canvasDimensions: {},
-      geometries: []
+      geometries: [],
+      appMode: 0,
+      animationState: Constants.animationStates.init
     };
   },
   beforeMount() {
@@ -49,6 +65,7 @@ export default {
       0.01,
       100
     );
+    this.camera.position.z = 2;
   },
   methods: {
     draw: function(geometry) {
@@ -79,7 +96,12 @@ export default {
     align-items: center;
     justify-content: space-around;
   }
+
   .left {
+    flex: 1;
+  }
+
+  .right {
     flex: 1;
   }
 }

@@ -14,5 +14,14 @@ module.exports = {
     3: 'square',
     4: 'circle',
     5: 'gem',
+  },
+  appModes: {
+    editing: 0,
+    animation: 1
+  },
+  animationStates: {
+    init: 0,
+    play: 1,
+    pause: 2
   }
 };
