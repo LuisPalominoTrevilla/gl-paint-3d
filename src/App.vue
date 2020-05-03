@@ -3,6 +3,7 @@
     <div class="main-container">
       <div class="left">
         <geometry-toolbox @draw="draw" />
+        <MaterialToolbox/>
       </div>
       <div class="center">
         <paint-canvas
@@ -32,6 +33,7 @@ import PaintCanvas from './components/PaintCanvas';
 import CameraToolbox from './components/CameraToolbox';
 import GeometryToolbox from './components/GeometryToolbox';
 import ModeSelection from './components/ModeSelection';
+import MaterialToolbox from './components/MaterialToolbox';
 import Constants from './constants';
 
 import * as Three from 'three';
@@ -43,7 +45,8 @@ export default {
     PaintCanvas,
     CameraToolbox,
     GeometryToolbox,
-    ModeSelection
+    ModeSelection,
+    MaterialToolbox,
   },
   data() {
     return {

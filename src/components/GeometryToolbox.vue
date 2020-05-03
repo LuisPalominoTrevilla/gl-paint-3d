@@ -1,5 +1,6 @@
 <template>
   <div class="toolbox card">
+    <h3 class="Title">Geometries</h3>
     <v-row>
       <v-col cols="6" v-for="geometry in geometries" :key="geometry">
         <GeometryTool class="geometry" :geometry="FigureIcon[geometry]" @draw="draw" :name="geometry"/>
@@ -35,5 +36,9 @@ export default {
 <style lang="scss" scoped>
 .geometry {
   width: 100%;
+}
+
+.Title{
+  align: center;
 }
 </style>
