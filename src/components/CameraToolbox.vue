@@ -22,6 +22,13 @@
         max="180"
         label="Yaw"
       ></v-slider>
+      <v-slider
+        :readonly="isAnimationMode"
+        v-model="roll"
+        min="-180"
+        max="180"
+        label="Roll"
+      ></v-slider>
     </div>
     <div class="vertical-sliders">
       <v-slider
@@ -111,7 +118,11 @@
           @click="setTarget"
           >Set</v-btn
         >
-        <v-switch label="Fix"></v-switch>
+        <v-switch
+          :readonly="isAnimationMode"
+          v-model="cameraAnimation.fixedTarget"
+          label="Fix"
+        />
       </div>
       <v-chip>
         Animation
@@ -121,7 +132,7 @@
           :readonly="isAnimationMode"
           v-model="cameraAnimation.orbit"
           label="Orbit"
-        ></v-switch>
+        />
         <div class="d-flex">
           <v-text-field
             v-model="deltaTheta"
@@ -166,12 +177,26 @@ export default {
       deltaTheta: this.cameraWrapper.getDegDeltaTheta()
     };
   },
+  watch: {
+    fixedTarget(fixed) {
+      this.target = fixed
+        ? {
+            x: this.cameraAnimation.target.x,
+            y: this.cameraAnimation.target.y,
+            z: this.cameraAnimation.target.z
+          }
+        : {};
+    }
+  },
   computed: {
     camera() {
       return this.cameraWrapper.camera;
     },
     cameraAnimation() {
       return this.cameraWrapper.animation;
+    },
+    fixedTarget() {
+      return this.cameraAnimation.fixedTarget;
     },
     isAnimationMode() {
       return this.appMode === Constants.appModes.animation;
@@ -239,6 +264,15 @@ export default {
         if (this.isAnimationMode) return;
         this.camera.rotation.y = -(deg * Math.PI) / 180;
       }
+    },
+    roll: {
+      get() {
+        return -(this.camera.rotation.z * 180) / Math.PI;
+      },
+      set(deg) {
+        if (this.isAnimationMode) return;
+        this.camera.rotation.z = -(deg * Math.PI) / 180;
+      }
     }
   },
   methods: {
@@ -252,7 +286,8 @@ export default {
     },
     setTarget() {
       this.camera.lookAt(this.target.x, this.target.y, this.target.z);
-      this.target = {};
+      this.cameraWrapper.setTarget(this.target.x, this.target.y, this.target.z);
+      if (!this.fixedTarget) this.target = {};
     },
     fillPosition() {
       this.newPosition = {
