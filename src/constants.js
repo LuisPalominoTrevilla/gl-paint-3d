@@ -12,5 +12,14 @@ module.exports = {
     1: 'globe',
     2: 'ice-cream',
     3: 'square'
+  },
+  appModes: {
+    editing: 0,
+    animation: 1
+  },
+  animationStates: {
+    init: 0,
+    play: 1,
+    pause: 2
   }
 };
