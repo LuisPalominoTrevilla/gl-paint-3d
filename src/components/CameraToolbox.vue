@@ -1,6 +1,6 @@
 <template>
   <div class="card camera-toolbox">
-    <div class="horizontal">
+    <div class="horizontal-sliders">
       <v-slider
         :readonly="isAnimationMode"
         v-model="panX"
@@ -22,6 +22,31 @@
         max="180"
         label="Yaw"
       ></v-slider>
+      <v-chip>
+        Animation
+      </v-chip>
+      <v-switch label="Orbit"></v-switch>
+    </div>
+    <div class="vertical-sliders">
+      <v-slider
+        :readonly="isAnimationMode"
+        class="large-slider"
+        v-model="panY"
+        min="-300"
+        max="300"
+        label="Pan Y"
+        :vertical="true"
+      ></v-slider>
+      <v-slider
+        :readonly="isAnimationMode"
+        v-model="pitch"
+        min="-180"
+        max="180"
+        label="Pitch"
+        :vertical="true"
+      ></v-slider>
+    </div>
+    <div class="position-inputs">
       <div class="input-group">
         <v-chip label>
           Position
@@ -92,25 +117,6 @@
         >
         <v-switch label="Fix"></v-switch>
       </div>
-    </div>
-    <div class="vertical">
-      <v-slider
-        :readonly="isAnimationMode"
-        class="large-slider"
-        v-model="panY"
-        min="-300"
-        max="300"
-        label="Pan Y"
-        :vertical="true"
-      ></v-slider>
-      <v-slider
-        :readonly="isAnimationMode"
-        v-model="pitch"
-        min="-180"
-        max="180"
-        label="Pitch"
-        :vertical="true"
-      ></v-slider>
     </div>
   </div>
 </template>
@@ -233,17 +239,21 @@ export default {
   justify-content: space-around;
   width: 100%;
 
-  .horizontal {
-    flex: 5;
+  .horizontal-sliders {
+    flex: 4;
   }
 
-  .vertical {
+  .vertical-sliders {
     display: flex;
     flex: 3;
 
     ::v-deep .v-slider {
       height: 250px;
     }
+  }
+
+  .position-inputs {
+    flex: 5;
   }
 
   .input-group {
