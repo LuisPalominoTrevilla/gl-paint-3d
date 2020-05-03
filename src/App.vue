@@ -8,7 +8,7 @@
         <div class="center">
           <paint-canvas
             :canvasDimensions="canvasDimensions"
-            :camera="camera"
+            :cameraWrapper="cameraWrapper"
             :geometries="geometries"
             :appMode="appMode"
             :animationState="animationState"
@@ -27,7 +27,7 @@
       <div class="bottom-container">
         <div class="left"></div>
         <div class="right">
-          <camera-toolbox :camera="camera" :appMode="appMode" />
+          <camera-toolbox :cameraWrapper="cameraWrapper" :appMode="appMode" />
         </div>
       </div>
     </div>
@@ -39,9 +39,9 @@ import PaintCanvas from './components/PaintCanvas';
 import CameraToolbox from './components/CameraToolbox';
 import GeometryToolbox from './components/GeometryToolbox';
 import ModeSelection from './components/ModeSelection';
+import CameraWrapper from './utils/cameraWrapper';
 import Constants from './constants';
 
-import * as Three from 'three';
 import './styles/index.scss';
 
 export default {
@@ -54,7 +54,7 @@ export default {
   },
   data() {
     return {
-      camera: null,
+      cameraWrapper: null,
       canvasDimensions: {},
       geometries: [],
       appMode: 0,
@@ -66,13 +66,13 @@ export default {
       width: 800,
       height: 550
     };
-    this.camera = new Three.PerspectiveCamera(
-      70,
-      this.canvasDimensions.width / this.canvasDimensions.height,
-      0.01,
-      100
-    );
-    this.camera.position.z = 2;
+    this.cameraWrapper = new CameraWrapper({
+      fovy: 70,
+      aspect: this.canvasDimensions.width / this.canvasDimensions.height,
+      near: 0.01,
+      far: 100,
+      initZ: 2
+    });
   },
   methods: {
     draw: function(geometry) {

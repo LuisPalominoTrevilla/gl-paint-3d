@@ -25,7 +25,7 @@
       <v-chip>
         Animation
       </v-chip>
-      <v-switch label="Orbit"></v-switch>
+      <v-switch v-model="cameraAnimation.orbit" label="Orbit"></v-switch>
     </div>
     <div class="vertical-sliders">
       <v-slider
@@ -126,7 +126,7 @@ import Constants from '../constants';
 
 export default {
   props: {
-    camera: {
+    cameraWrapper: {
       type: Object,
       required: true
     },
@@ -144,6 +144,12 @@ export default {
     };
   },
   computed: {
+    camera() {
+      return this.cameraWrapper.camera;
+    },
+    cameraAnimation() {
+      return this.cameraWrapper.animation;
+    },
     isAnimationMode() {
       return this.appMode === Constants.appModes.animation;
     },

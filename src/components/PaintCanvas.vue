@@ -10,7 +10,7 @@ export default {
   name: 'PaintCanvas',
 
   props: {
-    camera: {
+    cameraWrapper: {
       type: Object,
       required: true
     },
@@ -38,10 +38,17 @@ export default {
       renderer: null,
       mesh: null,
       mouse: null,
-      raycaster: null,
-      theta: 0,
-      deltaTheta: 0.01
+      raycaster: null
     };
+  },
+
+  computed: {
+    camera() {
+      return this.cameraWrapper.camera;
+    },
+    cameraAnimation() {
+      return this.cameraWrapper.animation;
+    }
   },
 
   mounted() {
@@ -78,14 +85,10 @@ export default {
         this.appMode === Constants.appModes.animation &&
         this.animationState === Constants.animationStates.play
       ) {
-        const x = 2 * Math.sin(this.theta);
-        const z = 2 * Math.cos(this.theta);
-        // TODO: module
-        this.theta += this.deltaTheta;
-        this.camera.position.set(x, 0, z);
-        // TODO: use target data
-        this.camera.lookAt(0, 0, 0);
-        this.camera.up.set(0, 1, 0);
+        if (this.cameraAnimation.orbit) {
+          this.cameraWrapper.orbitStep();
+        }
+        // TODO: Animate all meshes
       }
       this.renderer.render(this.scene, this.camera);
     },
