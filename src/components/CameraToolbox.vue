@@ -22,32 +22,6 @@
         max="180"
         label="Yaw"
       ></v-slider>
-      <v-chip>
-        Animation
-      </v-chip>
-      <div class="d-flex justify-space-around mt-2">
-        <v-switch
-          :readonly="isAnimationMode"
-          v-model="cameraAnimation.orbit"
-          label="Orbit"
-        ></v-switch>
-        <div class="d-flex">
-          <v-text-field
-            v-model="deltaTheta"
-            class="number-input align-self-start"
-            label="deltaTheta"
-            hide-details="auto"
-            type="number"
-          />
-          <v-btn
-            :disabled="disableSetDeltaTheta"
-            class="white--text align-self-center ml-2"
-            color="blue darken-3"
-            @click="setDeltaTheta"
-            >Set</v-btn
-          >
-        </div>
-      </div>
     </div>
     <div class="vertical-sliders">
       <v-slider
@@ -138,6 +112,32 @@
           >Set</v-btn
         >
         <v-switch label="Fix"></v-switch>
+      </div>
+      <v-chip>
+        Animation
+      </v-chip>
+      <div class="d-flex justify-space-around mt-2">
+        <v-switch
+          :readonly="isAnimationMode"
+          v-model="cameraAnimation.orbit"
+          label="Orbit"
+        ></v-switch>
+        <div class="d-flex">
+          <v-text-field
+            v-model="deltaTheta"
+            class="number-input align-self-start"
+            label="deltaTheta"
+            hide-details="auto"
+            type="number"
+          />
+          <v-btn
+            :disabled="disableSetDeltaTheta"
+            class="white--text align-self-center ml-2"
+            color="blue darken-3"
+            @click="setDeltaTheta"
+            >Set</v-btn
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -275,12 +275,14 @@ export default {
   width: 100%;
 
   .horizontal-sliders {
+    display: flex;
+    flex-direction: column;
     flex: 4;
   }
 
   .vertical-sliders {
     display: flex;
-    flex: 3;
+    flex: 2;
 
     ::v-deep .v-slider {
       height: 250px;
