@@ -3,9 +3,12 @@
     <h3>Material</h3>
     <v-row>
       <v-col>
-          <v-expansion-panels accordion>
-                <MaterialTool v-for="material in materials" :key="material" :materialName="material" :materialInfo="info"/>
-          </v-expansion-panels>
+          <v-select
+          :items="materials"
+          label="Choose"
+          v-model="materials[2]"
+        ></v-select>
+        <MaterialTool/>
       </v-col>
     </v-row>
   </div>
