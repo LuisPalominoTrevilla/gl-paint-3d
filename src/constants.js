@@ -13,7 +13,7 @@ module.exports = {
     2: 'ice-cream',
     3: 'square',
     4: 'circle',
-    5: 'gem',
+    5: 'gem'
   },
   appModes: {
     editing: 0,
