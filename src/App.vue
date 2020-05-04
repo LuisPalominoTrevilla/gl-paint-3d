@@ -39,8 +39,8 @@ import CameraToolbox from './components/CameraToolbox';
 import GeometryToolbox from './components/GeometryToolbox';
 import ModeSelection from './components/ModeSelection';
 import CameraWrapper from './wrappers/cameraWrapper';
+import MeshWrapper from './wrappers/meshWrapper';
 import Constants from './constants';
-import * as Three from 'three';
 
 import './styles/index.scss';
 
@@ -75,10 +75,10 @@ export default {
     });
   },
   methods: {
-    createMesh({ geometry, material }) {
-      const mesh = new Three.Mesh(geometry, material);
-      this.meshWrappers.push(mesh);
-      this.$refs.canvas.addMesh(mesh);
+    createMesh(meshData) {
+      const meshWrapper = new MeshWrapper(meshData);
+      this.meshWrappers.push(meshWrapper);
+      this.$refs.canvas.addMesh(meshWrapper.mesh);
     },
     modeChanged(newMode) {
       this.appMode = newMode;
