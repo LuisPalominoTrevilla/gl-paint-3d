@@ -11,7 +11,7 @@
       <v-chip label>
         Animation Controls
       </v-chip>
-      <div class="d-flex justify-space-around mt-4">
+      <div class="d-flex justify-space-around mt-7">
         <v-btn
           :disabled="disablePlayBtn"
           @click="playAnimation"
@@ -35,6 +35,28 @@
         >
       </div>
     </div>
+    <div class="editing-controls" v-show="showEditing">
+      <v-chip label>
+        Editing Controls
+      </v-chip>
+      <v-radio-group class="mt-7" v-model="editingState" row>
+        <v-radio :value="editingStates.select" active-class="selected-state">
+          <template v-slot:label>
+            <font-awesome-icon icon="edit" class="state-icon" />
+          </template>
+        </v-radio>
+        <v-radio :value="editingStates.delete" active-class="selected-state">
+          <template v-slot:label>
+            <font-awesome-icon icon="trash-alt" class="state-icon" />
+          </template>
+        </v-radio>
+        <v-radio :value="editingStates.group" active-class="selected-state">
+          <template v-slot:label>
+            <font-awesome-icon icon="object-group" class="state-icon" />
+          </template>
+        </v-radio>
+      </v-radio-group>
+    </div>
   </div>
 </template>
 
@@ -50,6 +72,10 @@ export default {
     animationState: {
       type: Number,
       required: true
+    },
+    selectedEditState: {
+      type: Number,
+      required: true
     }
   },
   computed: {
@@ -62,6 +88,17 @@ export default {
         if (newMode === Constants.appModes.editing)
           this.$emit('anim-state-change', Constants.animationStates.init);
       }
+    },
+    editingState: {
+      get() {
+        return this.selectedEditState;
+      },
+      set(state) {
+        this.$emit('edit-state-change', state);
+      }
+    },
+    editingStates() {
+      return Constants.editingStates;
     },
     showEditing() {
       return this.mode === Constants.appModes.editing;
@@ -89,3 +126,15 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.state-icon {
+  font-size: 18px;
+}
+
+.selected-state {
+  .state-icon {
+    color: rgb(45, 112, 200);
+  }
+}
+</style>

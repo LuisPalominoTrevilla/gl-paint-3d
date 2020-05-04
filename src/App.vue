@@ -14,17 +14,19 @@
             ref="canvas"
           />
         </div>
-        <div class="right">
+        <div class="right"></div>
+      </div>
+      <div class="bottom-container">
+        <div class="left">
           <mode-selection
             :mode="appMode"
             :animationState="animationState"
+            :selectedEditState="editingState"
             @mode-change="modeChanged"
             @anim-state-change="animStateChanged"
+            @edit-state-change="editStateChanged"
           />
         </div>
-      </div>
-      <div class="bottom-container">
-        <div class="left"></div>
         <div class="right">
           <camera-toolbox :cameraWrapper="cameraWrapper" :appMode="appMode" />
         </div>
@@ -58,7 +60,8 @@ export default {
       canvasDimensions: {},
       meshWrappers: [],
       appMode: Constants.appModes.editing,
-      animationState: Constants.animationStates.init
+      animationState: Constants.animationStates.init,
+      editingState: Constants.editingStates.select
     };
   },
   beforeMount() {
@@ -85,12 +88,16 @@ export default {
       if (newMode === Constants.appModes.animation) {
         this.cameraWrapper.prepareAnimation();
       }
+      // TODO: Deselect mesh(es)
     },
     animStateChanged(newState) {
       this.animationState = newState;
       if (newState === Constants.animationStates.init) {
         this.cameraWrapper.resetAnimationData();
       }
+    },
+    editStateChanged(newState) {
+      this.editingState = newState;
     }
   }
 };
@@ -126,6 +133,7 @@ export default {
 .bottom-container {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding-right: 1rem;
 
   .left {
