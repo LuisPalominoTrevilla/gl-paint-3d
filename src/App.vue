@@ -20,7 +20,7 @@
             :mode="appMode"
             :animationState="animationState"
             @mode-change="modeChanged"
-            @anim-state-change="animationState = $event"
+            @anim-state-change="animStateChanged"
           />
         </div>
       </div>
@@ -57,7 +57,7 @@ export default {
       cameraWrapper: null,
       canvasDimensions: {},
       geometries: [],
-      appMode: 0,
+      appMode: Constants.appModes.editing,
       animationState: Constants.animationStates.init
     };
   },
@@ -81,7 +81,13 @@ export default {
     modeChanged(newMode) {
       this.appMode = newMode;
       if (newMode === Constants.appModes.animation) {
-        this.cameraWrapper.setAnimationData();
+        this.cameraWrapper.prepareAnimation();
+      }
+    },
+    animStateChanged(newState) {
+      this.animationState = newState;
+      if (newState === Constants.animationStates.init) {
+        this.cameraWrapper.resetAnimationData();
       }
     }
   }

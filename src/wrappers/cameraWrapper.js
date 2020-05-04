@@ -10,7 +10,8 @@ class CameraWrapper {
       deltaTheta: 0.05,
       orbit: false
     };
-    this.setAnimationData();
+    this.initData = {};
+    this.prepareAnimation();
   }
 
   setAnimationData() {
@@ -26,6 +27,11 @@ class CameraWrapper {
       if (this.camera.position.x < 0)
         this.animation.theta = 2 * Math.PI - this.animation.theta;
     }
+  }
+
+  prepareAnimation() {
+    this.initData.position = this.camera.position.clone();
+    this.setAnimationData();
   }
 
   setTarget(x, y, z) {
@@ -67,7 +73,19 @@ class CameraWrapper {
     }
   }
 
-  // TODO: Reset animation
+  resetAnimationData() {
+    this.camera.position.set(
+      this.initData.position.x,
+      this.initData.position.y,
+      this.initData.position.z
+    );
+    if (this.animation.fixedTarget) {
+      this.camera.lookAt(this.animation.target);
+    } else {
+      this.camera.lookAt(0, 0, 0);
+    }
+    this.setAnimationData();
+  }
 }
 
 export default CameraWrapper;
