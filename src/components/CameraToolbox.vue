@@ -22,10 +22,13 @@
         max="180"
         label="Yaw"
       ></v-slider>
-      <v-chip>
-        Animation
-      </v-chip>
-      <v-switch label="Orbit"></v-switch>
+      <v-slider
+        :readonly="isAnimationMode"
+        v-model="roll"
+        min="-180"
+        max="180"
+        label="Roll"
+      ></v-slider>
     </div>
     <div class="vertical-sliders">
       <v-slider
@@ -115,7 +118,37 @@
           @click="setTarget"
           >Set</v-btn
         >
-        <v-switch label="Fix"></v-switch>
+        <v-switch
+          :readonly="isAnimationMode"
+          v-model="cameraAnimation.fixedTarget"
+          label="Fix"
+        />
+      </div>
+      <v-chip>
+        Animation
+      </v-chip>
+      <div class="d-flex justify-space-around mt-2">
+        <v-switch
+          :readonly="isAnimationMode"
+          v-model="cameraAnimation.orbit"
+          label="Orbit"
+        />
+        <div class="d-flex">
+          <v-text-field
+            v-model="deltaTheta"
+            class="number-input align-self-start"
+            label="deltaTheta"
+            hide-details="auto"
+            type="number"
+          />
+          <v-btn
+            :disabled="disableSetDeltaTheta"
+            class="white--text align-self-center ml-2"
+            color="blue darken-3"
+            @click="setDeltaTheta"
+            >Set</v-btn
+          >
+        </div>
       </div>
     </div>
   </div>
@@ -126,7 +159,7 @@ import Constants from '../constants';
 
 export default {
   props: {
-    camera: {
+    cameraWrapper: {
       type: Object,
       required: true
     },
@@ -140,28 +173,52 @@ export default {
       stepFactor: 0.08,
       zoomFactor: 0.3,
       newPosition: {},
-      target: {}
+      target: {},
+      deltaTheta: this.cameraWrapper.getDegDeltaTheta()
     };
   },
+  watch: {
+    fixedTarget(fixed) {
+      this.target = fixed
+        ? {
+            x: this.cameraAnimation.target.x,
+            y: this.cameraAnimation.target.y,
+            z: this.cameraAnimation.target.z
+          }
+        : {};
+    }
+  },
   computed: {
+    camera() {
+      return this.cameraWrapper.camera;
+    },
+    cameraAnimation() {
+      return this.cameraWrapper.animation;
+    },
+    fixedTarget() {
+      return this.cameraAnimation.fixedTarget;
+    },
     isAnimationMode() {
       return this.appMode === Constants.appModes.animation;
     },
     disableSetPosition() {
       return (
         this.isAnimationMode ||
-        isNaN(this.newPosition.x) ||
-        isNaN(this.newPosition.y) ||
-        isNaN(this.newPosition.z)
+        isNaN(parseFloat(this.newPosition.x)) ||
+        isNaN(parseFloat(this.newPosition.y)) ||
+        isNaN(parseFloat(this.newPosition.z))
       );
     },
     disableSetTarget() {
       return (
         this.isAnimationMode ||
-        isNaN(this.target.x) ||
-        isNaN(this.target.y) ||
-        isNaN(this.target.z)
+        isNaN(parseFloat(this.target.x)) ||
+        isNaN(parseFloat(this.target.y)) ||
+        isNaN(parseFloat(this.target.z))
       );
+    },
+    disableSetDeltaTheta() {
+      return this.isAnimationMode || isNaN(parseFloat(this.deltaTheta));
     },
     panX: {
       get() {
@@ -207,6 +264,15 @@ export default {
         if (this.isAnimationMode) return;
         this.camera.rotation.y = -(deg * Math.PI) / 180;
       }
+    },
+    roll: {
+      get() {
+        return -(this.camera.rotation.z * 180) / Math.PI;
+      },
+      set(deg) {
+        if (this.isAnimationMode) return;
+        this.camera.rotation.z = -(deg * Math.PI) / 180;
+      }
     }
   },
   methods: {
@@ -220,7 +286,8 @@ export default {
     },
     setTarget() {
       this.camera.lookAt(this.target.x, this.target.y, this.target.z);
-      this.target = {};
+      this.cameraWrapper.setTarget(this.target.x, this.target.y, this.target.z);
+      if (!this.fixedTarget) this.target = {};
     },
     fillPosition() {
       this.newPosition = {
@@ -228,6 +295,9 @@ export default {
         y: this.camera.position.y,
         z: this.camera.position.z
       };
+    },
+    setDeltaTheta() {
+      this.cameraWrapper.setDegDeltaTheta(this.deltaTheta);
     }
   }
 };
@@ -240,12 +310,14 @@ export default {
   width: 100%;
 
   .horizontal-sliders {
+    display: flex;
+    flex-direction: column;
     flex: 4;
   }
 
   .vertical-sliders {
     display: flex;
-    flex: 3;
+    flex: 2;
 
     ::v-deep .v-slider {
       height: 250px;

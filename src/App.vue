@@ -3,14 +3,12 @@
     <div class="main-container">
       <div class="top-container">
         <div class="left">
-          <geometry-toolbox @draw="draw" />
-          <MaterialToolbox/>
+          <FigureTabs @create-mesh="createMesh" />
         </div>
         <div class="center">
           <paint-canvas
             :canvasDimensions="canvasDimensions"
-            :camera="camera"
-            :geometries="geometries"
+            :cameraWrapper="cameraWrapper"
             :appMode="appMode"
             :animationState="animationState"
             ref="canvas"
@@ -20,15 +18,15 @@
           <mode-selection
             :mode="appMode"
             :animationState="animationState"
-            @mode-change="appMode = $event"
-            @anim-state-change="animationState = $event"
+            @mode-change="modeChanged"
+            @anim-state-change="animStateChanged"
           />
         </div>
       </div>
       <div class="bottom-container">
         <div class="left"></div>
         <div class="right">
-          <camera-toolbox :camera="camera" :appMode="appMode" />
+          <camera-toolbox :cameraWrapper="cameraWrapper" :appMode="appMode" />
         </div>
       </div>
     </div>
@@ -38,12 +36,12 @@
 <script>
 import PaintCanvas from './components/PaintCanvas';
 import CameraToolbox from './components/CameraToolbox';
-import GeometryToolbox from './components/GeometryToolbox';
 import ModeSelection from './components/ModeSelection';
-import MaterialToolbox from './components/MaterialToolbox';
+import CameraWrapper from './wrappers/cameraWrapper';
+import MeshWrapper from './wrappers/meshWrapper';
 import Constants from './constants';
+import FigureTabs from './components/FigureTabs';
 
-import * as Three from 'three';
 import './styles/index.scss';
 
 export default {
@@ -51,16 +49,15 @@ export default {
   components: {
     PaintCanvas,
     CameraToolbox,
-    GeometryToolbox,
     ModeSelection,
-    MaterialToolbox,
+    FigureTabs,
   },
   data() {
     return {
-      camera: null,
+      cameraWrapper: null,
       canvasDimensions: {},
-      geometries: [],
-      appMode: 0,
+      meshWrappers: [],
+      appMode: Constants.appModes.editing,
       animationState: Constants.animationStates.init
     };
   },
@@ -69,17 +66,31 @@ export default {
       width: 800,
       height: 550
     };
-    this.camera = new Three.PerspectiveCamera(
-      70,
-      this.canvasDimensions.width / this.canvasDimensions.height,
-      0.01,
-      100
-    );
-    this.camera.position.z = 2;
+    this.cameraWrapper = new CameraWrapper({
+      fovy: 70,
+      aspect: this.canvasDimensions.width / this.canvasDimensions.height,
+      near: 0.01,
+      far: 100,
+      initZ: 2
+    });
   },
   methods: {
-    draw: function(geometry) {
-      this.$refs.canvas.addFigure(geometry);
+    createMesh(meshData) {
+      const meshWrapper = new MeshWrapper(meshData);
+      this.meshWrappers.push(meshWrapper);
+      this.$refs.canvas.addMesh(meshWrapper.mesh);
+    },
+    modeChanged(newMode) {
+      this.appMode = newMode;
+      if (newMode === Constants.appModes.animation) {
+        this.cameraWrapper.prepareAnimation();
+      }
+    },
+    animStateChanged(newState) {
+      this.animationState = newState;
+      if (newState === Constants.animationStates.init) {
+        this.cameraWrapper.resetAnimationData();
+      }
     }
   }
 };
@@ -92,7 +103,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 1rem;
 }
 
 .top-container {

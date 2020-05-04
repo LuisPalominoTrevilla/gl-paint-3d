@@ -15,6 +15,25 @@ module.exports = {
     4: 'circle',
     5: 'gem'
   },
+  materials:{
+    lineBasic: 0,
+    lineDashed:1,
+    meshBasic:2,
+    meshDepth:3,
+    meshDistance:4,
+    meshLambert:5,
+    meshMatcap:6,
+    meshNormal:7,
+    meshPhong:8,
+    meshPhysical:9,
+    meshStandard:10,
+    meshToon:11,
+    points:12,
+    rawShader:13,
+    shader:14,
+    shadow:15,
+    sprite:16,
+  },
   appModes: {
     editing: 0,
     animation: 1

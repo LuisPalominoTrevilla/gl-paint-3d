@@ -6,7 +6,7 @@
         <GeometryTool
           class="geometry"
           :geometry="FigureIcon[geometry]"
-          @draw="draw"
+          @create-geometry="createMesh"
           :name="geometry"
         />
       </v-col>
@@ -23,7 +23,7 @@ export default {
     GeometryTool
   },
 
-  data: function() {
+  data() {
     return {
       geometries: Object.keys(Constants.geometries),
       FigureIcon: Constants.geometries
@@ -31,8 +31,12 @@ export default {
   },
 
   methods: {
-    draw: function(name) {
-      this.$emit('draw', name);
+    createMesh(geometryType) {
+      this.$emit('create-mesh',geometryType);
+      //const geometry = GeometryFactory.create(geometryType);
+      // TODO: Create selected material using own factory
+      //const material = new Three.MeshBasicMaterial();
+      //this.$emit('create-mesh', { geometry, material });
     }
   }
 };

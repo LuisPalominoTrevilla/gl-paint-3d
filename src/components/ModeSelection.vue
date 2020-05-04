@@ -59,7 +59,8 @@ export default {
       },
       set(newMode) {
         this.$emit('mode-change', newMode);
-        this.$emit('anim-state-change', Constants.animationStates.init);
+        if (newMode === Constants.appModes.editing)
+          this.$emit('anim-state-change', Constants.animationStates.init);
       }
     },
     showEditing() {
