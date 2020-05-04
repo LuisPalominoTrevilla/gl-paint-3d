@@ -3,7 +3,12 @@
     <h3 class="Title">Geometries</h3>
     <v-row>
       <v-col cols="6" v-for="geometry in geometries" :key="geometry">
-        <GeometryTool class="geometry" :geometry="FigureIcon[geometry]" @draw="draw" :name="geometry"/>
+        <GeometryTool
+          class="geometry"
+          :geometry="FigureIcon[geometry]"
+          @draw="draw"
+          :name="geometry"
+        />
       </v-col>
     </v-row>
   </div>
@@ -21,7 +26,7 @@ export default {
   data: function() {
     return {
       geometries: Object.keys(Constants.geometries),
-      FigureIcon: Constants.geometries,
+      FigureIcon: Constants.geometries
     };
   },
 

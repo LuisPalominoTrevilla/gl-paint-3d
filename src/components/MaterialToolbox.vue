@@ -6,9 +6,9 @@
           <v-select
           :items="materials"
           label="Choose"
-          v-model="materials[2]"
+          v-model="chosenMaterial"
         ></v-select>
-        <MaterialTool/>
+        <MaterialTool :materialName="chosenMaterial" :materialKey="materialValues[chosenMaterial]"/>
       </v-col>
     </v-row>
   </div>
@@ -16,7 +16,7 @@
 
 <script>
 import MaterialTool from "./MaterialTool";
-import Constants from '../constants';
+import Materials from '../materials';
 
 export default {
     components:{
@@ -24,8 +24,9 @@ export default {
     },
     data: function(){
         return({
-            materials : Object.keys(Constants.materials),
-            info:[],
+            materials : Object.keys(Materials.materials),
+            materialValues: Materials.materials,
+            chosenMaterial : "MeshBasic",
         });
     },
 };

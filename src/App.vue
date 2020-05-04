@@ -1,28 +1,35 @@
 <template>
   <v-app>
     <div class="main-container">
-      <div class="left">
-        <geometry-toolbox @draw="draw" />
-        <MaterialToolbox/>
+      <div class="top-container">
+        <div class="left">
+          <geometry-toolbox @draw="draw" />
+          <MaterialToolbox/>
+        </div>
+        <div class="center">
+          <paint-canvas
+            :canvasDimensions="canvasDimensions"
+            :camera="camera"
+            :geometries="geometries"
+            :appMode="appMode"
+            :animationState="animationState"
+            ref="canvas"
+          />
+        </div>
+        <div class="right">
+          <mode-selection
+            :mode="appMode"
+            :animationState="animationState"
+            @mode-change="appMode = $event"
+            @anim-state-change="animationState = $event"
+          />
+        </div>
       </div>
-      <div class="center">
-        <paint-canvas
-          :canvasDimensions="canvasDimensions"
-          :camera="camera"
-          :geometries="geometries"
-          :appMode="appMode"
-          :animationState="animationState"
-          ref="canvas"
-        />
-        <camera-toolbox :camera="camera" :appMode="appMode" />
-      </div>
-      <div class="right">
-        <mode-selection
-          :mode="appMode"
-          :animationState="animationState"
-          @mode-change="appMode = $event"
-          @anim-state-change="animationState = $event"
-        />
+      <div class="bottom-container">
+        <div class="left"></div>
+        <div class="right">
+          <camera-toolbox :camera="camera" :appMode="appMode" />
+        </div>
       </div>
     </div>
   </v-app>
@@ -88,16 +95,13 @@ export default {
   margin-top: 1rem;
 }
 
-.main-container {
+.top-container {
   display: flex;
   justify-content: space-around;
+  padding-right: 1rem;
 
   .center {
-    display: flex;
     flex: 2;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
   }
 
   .left {
@@ -106,6 +110,20 @@ export default {
 
   .right {
     flex: 1;
+  }
+}
+
+.bottom-container {
+  display: flex;
+  justify-content: space-around;
+  padding-right: 1rem;
+
+  .left {
+    flex: 1;
+  }
+
+  .right {
+    flex: 3;
   }
 }
 </style>

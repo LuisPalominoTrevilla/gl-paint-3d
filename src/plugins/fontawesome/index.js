@@ -9,9 +9,8 @@ import {
   faIceCream,
   faBrush,
   faCircle,
-  faGem,
+  faGem
 } from '@fortawesome/free-solid-svg-icons';
-
 
 library.add(faCube);
 library.add(faGlobe);
