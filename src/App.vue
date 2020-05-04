@@ -3,13 +3,12 @@
     <div class="main-container">
       <div class="top-container">
         <div class="left">
-          <geometry-toolbox @draw="draw" />
+          <geometry-toolbox @create-mesh="createMesh" />
         </div>
         <div class="center">
           <paint-canvas
             :canvasDimensions="canvasDimensions"
             :cameraWrapper="cameraWrapper"
-            :geometries="geometries"
             :appMode="appMode"
             :animationState="animationState"
             ref="canvas"
@@ -41,6 +40,7 @@ import GeometryToolbox from './components/GeometryToolbox';
 import ModeSelection from './components/ModeSelection';
 import CameraWrapper from './wrappers/cameraWrapper';
 import Constants from './constants';
+import * as Three from 'three';
 
 import './styles/index.scss';
 
@@ -56,7 +56,7 @@ export default {
     return {
       cameraWrapper: null,
       canvasDimensions: {},
-      geometries: [],
+      meshWrappers: [],
       appMode: Constants.appModes.editing,
       animationState: Constants.animationStates.init
     };
@@ -75,8 +75,10 @@ export default {
     });
   },
   methods: {
-    draw(geometry) {
-      this.$refs.canvas.addFigure(geometry);
+    createMesh({ geometry, material }) {
+      const mesh = new Three.Mesh(geometry, material);
+      this.meshWrappers.push(mesh);
+      this.$refs.canvas.addMesh(mesh);
     },
     modeChanged(newMode) {
       this.appMode = newMode;

@@ -1,7 +1,7 @@
 <template>
   <v-tooltip bottom>
     <template v-slot:activator="{ on }">
-      <v-btn class="toolBtn" v-on:click="draw" v-on="on">
+      <v-btn class="toolBtn" @click="createGeometry" v-on="on">
         <font-awesome-icon :icon="geometryIcon" />
       </v-btn>
     </template>
@@ -30,8 +30,8 @@ export default {
     }
   },
   methods: {
-    draw() {
-      this.$emit('draw', this.geometry);
+    createGeometry() {
+      this.$emit('create-geometry', this.geometry);
     }
   }
 };

@@ -5,7 +5,7 @@
         <GeometryTool
           class="geometry"
           :geometry="FigureIcon[geometry]"
-          @draw="draw"
+          @create-geometry="createMesh"
           :name="geometry"
         />
       </v-col>
@@ -15,7 +15,9 @@
 
 <script>
 import GeometryTool from './GeometryTool';
+import GeometryFactory from '../factories/geometryFactory';
 import Constants from '../constants';
+import * as Three from 'three';
 
 export default {
   components: {
@@ -30,8 +32,11 @@ export default {
   },
 
   methods: {
-    draw(name) {
-      this.$emit('draw', name);
+    createMesh(geometryType) {
+      const geometry = GeometryFactory.create(geometryType);
+      // TODO: Create selected material using own factory
+      const material = new Three.MeshBasicMaterial();
+      this.$emit('create-mesh', { geometry, material });
     }
   }
 };

@@ -14,10 +14,6 @@ export default {
       type: Object,
       required: true
     },
-    geometries: {
-      type: Array,
-      required: true
-    },
     canvasDimensions: {
       type: Object,
       required: true
@@ -36,7 +32,6 @@ export default {
     return {
       scene: null,
       renderer: null,
-      mesh: null,
       mouse: null,
       raycaster: null
     };
@@ -46,6 +41,7 @@ export default {
     camera() {
       return this.cameraWrapper.camera;
     },
+
     cameraAnimation() {
       return this.cameraWrapper.animation;
     }
@@ -60,7 +56,6 @@ export default {
     init() {
       const container = this.$refs.container;
       this.scene = new Three.Scene();
-      this.mesh = [];
       this.raycaster = new Three.Raycaster();
       this.mouse = new Three.Vector2(-10, -10);
       this.renderer = new Three.WebGLRenderer({ antialias: true });
@@ -71,6 +66,7 @@ export default {
       container.appendChild(this.renderer.domElement);
       container.addEventListener('mousemove', this.onMouseMove, false);
     },
+
     animate() {
       requestAnimationFrame(this.animate);
 
@@ -91,73 +87,9 @@ export default {
       }
       this.renderer.render(this.scene, this.camera);
     },
-    addFigure(geometry) {
-      switch (geometry) {
-        case Constants.geometries.cube: {
-          let geometry = new Three.BoxGeometry(0.2, 0.2, 0.2);
-          let material = new Three.MeshBasicMaterial();
-          let fig = new Three.Mesh(geometry, material);
-          fig.position.set(-0.4, 0.4, 0);
-          this.mesh.push(fig);
-          this.scene.add(fig);
-          break;
-        }
 
-        case Constants.geometries.sphere: {
-          let geometry = new Three.SphereGeometry(0.2, 9, 9);
-          let material = new Three.MeshBasicMaterial();
-          let fig = new Three.Mesh(geometry, material);
-          fig.position.set(0, 0.4, 0);
-          this.mesh.push(fig);
-          this.scene.add(fig);
-          break;
-        }
-
-        case Constants.geometries.cone: {
-          let geometry = new Three.ConeGeometry(0.2, 0.5, 0.5);
-          let material = new Three.MeshBasicMaterial();
-          let fig = new Three.Mesh(geometry, material);
-          fig.position.set(-0.4, 0, 0);
-          this.mesh.push(fig);
-          this.scene.add(fig);
-          break;
-        }
-
-        case Constants.geometries.plane: {
-          let geometry = new Three.PlaneGeometry(1, 1, 1, 1);
-          let material = new Three.MeshBasicMaterial();
-          let fig = new Three.Mesh(geometry, material);
-          fig.rotation.x = -0.55 * Math.PI;
-          fig.position.set(0, -0.2, 0.5);
-          this.mesh.push(fig);
-          this.scene.add(fig);
-
-          break;
-        }
-
-        case Constants.geometries.cylinder: {
-          let geometry = new Three.CylinderGeometry(0.5, 0.5, 2, 10);
-          let material = new Three.MeshBasicMaterial();
-          let fig = new Three.Mesh(geometry, material);
-          fig.position.set(0, 0, 0);
-          this.mesh.push(fig);
-          this.scene.add(fig);
-          break;
-        }
-
-        case Constants.geometries.icosahedron: {
-          let geometry = new Three.IcosahedronGeometry(0.4, 0);
-          let material = new Three.MeshBasicMaterial();
-          let fig = new Three.Mesh(geometry, material);
-          fig.position.set(0.4, 0, 0);
-          this.mesh.push(fig);
-          this.scene.add(fig);
-          break;
-        }
-        default:
-          console.log('Hello from ' + geometry);
-          break;
-      }
+    addMesh(mesh) {
+      this.scene.add(mesh);
     },
 
     onMouseMove(event) {
@@ -172,5 +104,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped></style>
