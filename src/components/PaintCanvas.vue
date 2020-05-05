@@ -14,6 +14,10 @@ export default {
       type: Object,
       required: true
     },
+    meshWrappers: {
+      type: Array,
+      required: true
+    },
     canvasDimensions: {
       type: Object,
       required: true
@@ -76,7 +80,7 @@ export default {
         this.animationState === Constants.animationStates.play
       ) {
         this.cameraWrapper.animationStep();
-        // TODO: Animate all meshes
+        this.meshWrappers.forEach(wrapper => wrapper.animationStep());
       }
       this.renderer.render(this.scene, this.camera);
     },
