@@ -1,8 +1,8 @@
 <template>
   <div class="card editing-toolbox">
     <div v-show="selectedMesh !== null">
-      <div class="mb-4">
-        <v-chip>Properties</v-chip>
+      <v-chip>Properties</v-chip>
+      <div class="mb-4 d-flex flex-column">
         <coordinates-selection
           title="Position"
           :coordinates="position"
@@ -19,8 +19,8 @@
           @coordinates-set="setScaling"
         />
       </div>
-      <div class="">
-        <v-chip>Animation</v-chip>
+      <v-chip>Animation</v-chip>
+      <div class="d-flex flex-column align-center">
         <coordinates-selection
           title="Rotation"
           :coordinates="animationRotation"
