@@ -16,11 +16,13 @@
             ref="canvas"
           />
         </div>
-        <div class="right"></div>
+        <div class="right">
+          <editing-toolbox :selectedMesh="selectedMesh" />
+        </div>
       </div>
       <div class="bottom-container">
         <div class="left">
-          <mode-selection
+          <mode-selection-toolbox
             :mode="appMode"
             :animationState="animationState"
             :selectedEditState="editingState"
@@ -41,7 +43,8 @@
 import PaintCanvas from './components/PaintCanvas';
 import CameraToolbox from './components/CameraToolbox';
 import GeometryToolbox from './components/GeometryToolbox';
-import ModeSelection from './components/ModeSelection';
+import ModeSelectionToolbox from './components/ModeSelectionToolbox';
+import EditingToolbox from './components/EditingToolbox';
 import CameraWrapper from './wrappers/cameraWrapper';
 import MeshWrapper from './wrappers/meshWrapper';
 import Constants from './constants';
@@ -54,7 +57,8 @@ export default {
     PaintCanvas,
     CameraToolbox,
     GeometryToolbox,
-    ModeSelection
+    ModeSelectionToolbox,
+    EditingToolbox
   },
   data() {
     return {
