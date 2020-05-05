@@ -1,6 +1,8 @@
 <template>
     <v-form>
-        <MaterialInput v-for="(material,index) in Object.keys(materialFields)" :key="index" :field="material" :default="materialFields[material]" @updateData="updateData"/>
+        <v-expansion-panels accordion>
+        <MaterialInput v-for="(material) in Object.keys(materialFields)" :key="material" :field="material" :default="materialFields[material]" @updateData="updateData"/>
+        </v-expansion-panels>
     </v-form>
 </template>
 
@@ -29,9 +31,9 @@ export default {
     },
     computed:{
         materialFields(){
-            const fields = this.materialData[this.materialKey];
+            const fields = JSON.parse(JSON.stringify(this.materialData[this.materialKey]));
             return fields? fields: 0;
-        }
+        },
     },
     methods:{
         getData(){
