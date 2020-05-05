@@ -11,6 +11,8 @@
             :cameraWrapper="cameraWrapper"
             :appMode="appMode"
             :animationState="animationState"
+            @select-mesh="selectMesh"
+            @deselect-mesh="deselectMeshes"
             ref="canvas"
           />
         </div>
@@ -59,10 +61,19 @@ export default {
       cameraWrapper: null,
       canvasDimensions: {},
       meshWrappers: [],
+      selectedMeshIdx: null,
+      groupingMeshes: [],
       appMode: Constants.appModes.editing,
       animationState: Constants.animationStates.init,
       editingState: Constants.editingStates.select
     };
+  },
+  computed: {
+    selectedMesh() {
+      return this.selectedMeshIdx === null
+        ? null
+        : this.meshWrappers[this.selectedMeshIdx];
+    }
   },
   beforeMount() {
     this.canvasDimensions = {
@@ -87,8 +98,8 @@ export default {
       this.appMode = newMode;
       if (newMode === Constants.appModes.animation) {
         this.cameraWrapper.prepareAnimation();
+        this.deselectMeshes();
       }
-      // TODO: Deselect mesh(es)
     },
     animStateChanged(newState) {
       this.animationState = newState;
@@ -97,7 +108,43 @@ export default {
       }
     },
     editStateChanged(newState) {
+      this.deselectMeshes();
       this.editingState = newState;
+    },
+    selectMesh(uuid) {
+      if (this.appMode !== Constants.appModes.editing) return;
+
+      const selectedIdx = this.meshWrappers.findIndex(
+        wrapper => wrapper.mesh.uuid === uuid
+      );
+      switch (this.editingState) {
+        case Constants.editingStates.select:
+          if (this.selectedMesh) {
+            const selectedUUid = this.selectedMesh.mesh.uuid;
+            this.deselectMeshes();
+            if (this.meshWrappers[selectedIdx].mesh.uuid === selectedUUid)
+              return;
+          }
+          this.meshWrappers[selectedIdx].selectMesh();
+          this.selectedMeshIdx = selectedIdx;
+          break;
+        default:
+          console.error('Invalid current state');
+      }
+    },
+    deselectMeshes() {
+      switch (this.editingState) {
+        case Constants.editingStates.select:
+          if (this.selectedMesh) {
+            this.selectedMesh.deselectMesh();
+            this.selectedMeshIdx = null;
+          }
+          break;
+        case Constants.editingStates.group:
+          // TODO: Iterate over meshes idx and deselect them
+          this.groupingMeshes = [];
+          break;
+      }
     }
   }
 };

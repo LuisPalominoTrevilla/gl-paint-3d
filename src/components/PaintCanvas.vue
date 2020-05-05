@@ -57,26 +57,19 @@ export default {
       const container = this.$refs.container;
       this.scene = new Three.Scene();
       this.raycaster = new Three.Raycaster();
-      this.mouse = new Three.Vector2(-10, -10);
       this.renderer = new Three.WebGLRenderer({ antialias: true });
       this.renderer.setSize(
         this.canvasDimensions.width,
         this.canvasDimensions.height
       );
       container.appendChild(this.renderer.domElement);
-      container.addEventListener('mousemove', this.onMouseMove, false);
+      container.addEventListener('mousedown', this.onMouseClick, false);
     },
 
     animate() {
       requestAnimationFrame(this.animate);
 
       if (this.appMode === Constants.appModes.editing) {
-        this.raycaster.setFromCamera(this.mouse, this.camera);
-
-        var intersects = this.raycaster.intersectObjects(this.scene.children);
-        for (var i = 0; i < intersects.length; i++) {
-          intersects[i].object.material.color.set(0xc44f36);
-        }
         this.cameraWrapper.renderStep();
       } else if (
         this.appMode === Constants.appModes.animation &&
@@ -90,16 +83,26 @@ export default {
 
     addMesh(mesh) {
       this.scene.add(mesh);
+      this.$emit('select-mesh', mesh.uuid);
     },
 
-    onMouseMove(event) {
-      let x = event.clientX;
-      let y = event.clientY;
-      var rect = event.target.getBoundingClientRect();
-      var xClipp = (2 * (x - rect.left)) / this.canvasDimensions.width - 1;
-      var yClipp = (2 * (rect.top - y)) / this.canvasDimensions.height + 1;
-      this.mouse.x = xClipp;
-      this.mouse.y = yClipp;
+    onMouseClick(event) {
+      if (this.appMode !== Constants.appModes.editing) return;
+
+      const rect = event.target.getBoundingClientRect();
+      const mouse3D = {
+        x: (2 * (event.clientX - rect.left)) / this.canvasDimensions.width - 1,
+        y: (2 * (rect.top - event.clientY)) / this.canvasDimensions.height + 1
+      };
+
+      this.raycaster.setFromCamera(mouse3D, this.camera);
+
+      const intersects = this.raycaster.intersectObjects(this.scene.children);
+      if (intersects.length === 0) {
+        this.$emit('deselect-mesh');
+      } else {
+        this.$emit('select-mesh', intersects[0].object.uuid);
+      }
     }
   }
 };
