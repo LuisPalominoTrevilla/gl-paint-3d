@@ -86,6 +86,10 @@ export default {
       this.$emit('select-mesh', mesh.uuid);
     },
 
+    removeMesh(mesh) {
+      this.scene.remove(mesh);
+    },
+
     onMouseClick(event) {
       if (this.appMode !== Constants.appModes.editing) return;
 

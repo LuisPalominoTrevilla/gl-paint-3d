@@ -128,6 +128,10 @@ export default {
           this.meshWrappers[selectedIdx].selectMesh();
           this.selectedMeshIdx = selectedIdx;
           break;
+        case Constants.editingStates.delete:
+          this.$refs.canvas.removeMesh(this.meshWrappers[selectedIdx].mesh);
+          this.meshWrappers.splice(selectedIdx, 1);
+          break;
         default:
           console.error('Invalid current state');
       }
