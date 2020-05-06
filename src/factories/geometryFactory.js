@@ -28,7 +28,15 @@ export default {
       }
 
       case Constants.geometries.cone: {
-        return new Three.ConeGeometry(0.2, 0.5, 0.5);
+        return new Three.ConeGeometry(
+          params.radius,
+          params.height,
+          params.radialSegments,
+          params.heightSegments,
+          params.openEnded,
+          params.thetaStart,
+          params.thetaLength
+        );
       }
 
       case Constants.geometries.plane: {

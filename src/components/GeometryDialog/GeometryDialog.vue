@@ -13,6 +13,11 @@
         class="ma-7"
         :params="geometryParameters[geometryType]"
       />
+      <cone-geometry-inputs
+        v-show="coneSelected"
+        class="ma-7"
+        :params="geometryParameters[geometryType]"
+      />
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
@@ -25,12 +30,14 @@
 <script>
 import BoxGeometryInputs from './BoxGeometryInputs';
 import SphereGeometryInputs from './SphereGeometryInputs';
+import ConeGeometryInputs from './ConeGeometryInputs';
 import Constants from '../../constants';
 
 export default {
   components: {
     BoxGeometryInputs,
-    SphereGeometryInputs
+    SphereGeometryInputs,
+    ConeGeometryInputs
   },
   data() {
     return {
@@ -53,6 +60,9 @@ export default {
     },
     sphereSelected() {
       return this.geometryType === Constants.geometries.sphere;
+    },
+    coneSelected() {
+      return this.geometryType === Constants.geometries.cone;
     }
   },
   methods: {
@@ -87,7 +97,15 @@ export default {
           thetaStart: 0,
           thetaLength: Math.PI
         },
-        [Constants.geometries.cone]: {},
+        [Constants.geometries.cone]: {
+          radius: 1,
+          height: 1,
+          radialSegments: 8,
+          heightSegments: 1,
+          openEnded: false,
+          thetaStart: 0,
+          thetaLength: Math.PI * 2
+        },
         [Constants.geometries.plane]: {},
         [Constants.geometries.cylinder]: {},
         [Constants.geometries.icosahedron]: {}
