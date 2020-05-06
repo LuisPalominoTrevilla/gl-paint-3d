@@ -2,26 +2,29 @@
   <div class="toolbox card">
     <v-row>
       <v-col cols="6" v-for="geometry in geometries" :key="geometry">
-        <GeometryTool
+        <geometry-tool
           class="geometry"
           :geometry="FigureIcon[geometry]"
-          @create-geometry="createMesh"
+          @create-geometry="$refs.geometryDialog.open($event)"
           :name="geometry"
         />
       </v-col>
     </v-row>
+    <geometry-dialog ref="geometryDialog" @parameters-selected="createMesh" />
   </div>
 </template>
 
 <script>
 import GeometryTool from './GeometryTool';
+import GeometryDialog from './GeometryDialog';
 import GeometryFactory from '../factories/geometryFactory';
 import Constants from '../constants';
 import * as Three from 'three';
 
 export default {
   components: {
-    GeometryTool
+    GeometryTool,
+    GeometryDialog
   },
 
   data() {
@@ -32,8 +35,8 @@ export default {
   },
 
   methods: {
-    createMesh(geometryType) {
-      const geometry = GeometryFactory.create(geometryType);
+    createMesh({ type }) {
+      const geometry = GeometryFactory.create(type);
       // TODO: Create selected material using own factory
       const material = new Three.MeshBasicMaterial();
       this.$emit('create-mesh', { geometry, material });

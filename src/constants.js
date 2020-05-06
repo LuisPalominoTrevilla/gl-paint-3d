@@ -7,6 +7,14 @@ module.exports = {
     cylinder: 4,
     icosahedron: 5
   },
+  geometryNames: {
+    0: 'Cube',
+    1: 'Sphere',
+    2: 'Cone',
+    3: 'Plane',
+    4: 'Cylinder',
+    5: 'Icosahedron'
+  },
   geometryIcon: {
     0: 'cube',
     1: 'globe',
