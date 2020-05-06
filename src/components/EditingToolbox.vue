@@ -29,6 +29,11 @@
         <v-switch v-model="meshAnimation.animate" label="Animate" />
       </div>
     </div>
+    <div v-show="numberGroupingMeshes > 0">
+      <v-chip>Selected Objects</v-chip>
+      <p>{{ numberGroupingMeshes }}</p>
+      <v-btn class="white--text" color="blue darken-3">Group</v-btn>
+    </div>
   </div>
 </template>
 
@@ -43,6 +48,10 @@ export default {
     selectedMesh: {
       type: Object,
       default: null
+    },
+    numberGroupingMeshes: {
+      type: Number,
+      required: true
     }
   },
   data() {

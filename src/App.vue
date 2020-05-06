@@ -18,7 +18,10 @@
           />
         </div>
         <div class="right">
-          <editing-toolbox :selectedMesh="selectedMesh" />
+          <editing-toolbox
+            :selectedMesh="selectedMesh"
+            :numberGroupingMeshes="groupingMeshes.length"
+          />
         </div>
       </div>
       <div class="bottom-container">
