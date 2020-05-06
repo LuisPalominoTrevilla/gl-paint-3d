@@ -105,11 +105,18 @@ export default {
 
       this.raycaster.setFromCamera(mouse3D, this.camera);
 
-      const intersects = this.raycaster.intersectObjects(this.scene.children);
+      const intersects = this.raycaster.intersectObjects(
+        this.scene.children,
+        true
+      );
       if (intersects.length === 0) {
         this.$emit('deselect-mesh');
       } else {
-        this.$emit('select-mesh', intersects[0].object.uuid);
+        let object = intersects[0].object;
+        while (!(object.parent instanceof Three.Scene)) {
+          object = object.parent;
+        }
+        this.$emit('select-mesh', object.uuid);
       }
     }
   }
