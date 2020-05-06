@@ -2,9 +2,16 @@
   <div>
     <div class="d-flex">
       <v-text-field
-        v-model="params.radius"
+        v-model="params.radiusTop"
         class="number-input"
-        label="radius"
+        label="radiusTop"
+        hide-details="auto"
+        type="number"
+      />
+      <v-text-field
+        v-model="params.radiusBottom"
+        class="number-input"
+        label="radiusBottom"
         hide-details="auto"
         type="number"
       />

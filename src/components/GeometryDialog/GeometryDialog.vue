@@ -3,20 +3,10 @@
     <v-card>
       <v-card-title>{{ dialogTitle }}</v-card-title>
       <v-divider></v-divider>
-      <box-geometry-inputs
-        v-show="cubeSelected"
+      <component
         class="ma-7"
-        :params="geometryParameters[geometryType]"
-      />
-      <sphere-geometry-inputs
-        v-show="sphereSelected"
-        class="ma-7"
-        :params="geometryParameters[geometryType]"
-      />
-      <cone-geometry-inputs
-        v-show="coneSelected"
-        class="ma-7"
-        :params="geometryParameters[geometryType]"
+        :is="geometryComponent"
+        :params="geometryParams"
       />
       <v-divider></v-divider>
       <v-card-actions>
@@ -31,19 +21,31 @@
 import BoxGeometryInputs from './BoxGeometryInputs';
 import SphereGeometryInputs from './SphereGeometryInputs';
 import ConeGeometryInputs from './ConeGeometryInputs';
+import PlaneGeometryInputs from './PlaneGeometryInputs';
+import CylinderGeometryInputs from './CylinderGeometryInputs';
 import Constants from '../../constants';
 
 export default {
   components: {
     BoxGeometryInputs,
     SphereGeometryInputs,
-    ConeGeometryInputs
+    ConeGeometryInputs,
+    PlaneGeometryInputs,
+    CylinderGeometryInputs
   },
   data() {
     return {
       dialog: false,
       geometryType: null,
-      geometryParameters: {}
+      geometryParameters: {},
+      geometryInputComponents: {
+        [Constants.geometries.cube]: 'BoxGeometryInputs',
+        [Constants.geometries.sphere]: 'SphereGeometryInputs',
+        [Constants.geometries.cone]: 'ConeGeometryInputs',
+        [Constants.geometries.plane]: 'PlaneGeometryInputs',
+        [Constants.geometries.cylinder]: 'CylinderGeometryInputs',
+        [Constants.geometries.icosahedron]: 'IcosahedronGeometryInputs'
+      }
     };
   },
   beforeMount() {
@@ -55,14 +57,15 @@ export default {
         ? `${Constants.geometryNames[this.geometryType]} properties`
         : '';
     },
-    cubeSelected() {
-      return this.geometryType === Constants.geometries.cube;
+    geometryParams() {
+      return this.geometryType != null
+        ? this.geometryParameters[this.geometryType]
+        : {};
     },
-    sphereSelected() {
-      return this.geometryType === Constants.geometries.sphere;
-    },
-    coneSelected() {
-      return this.geometryType === Constants.geometries.cone;
+    geometryComponent() {
+      return this.geometryType != null
+        ? this.geometryInputComponents[this.geometryType]
+        : '';
     }
   },
   methods: {
@@ -75,7 +78,7 @@ export default {
       this.dialog = false;
       this.$emit('parameters-selected', {
         type: this.geometryType,
-        params: this.geometryParameters[this.geometryType]
+        params: this.geometryParams
       });
     },
     resetParams() {
@@ -106,8 +109,22 @@ export default {
           thetaStart: 0,
           thetaLength: Math.PI * 2
         },
-        [Constants.geometries.plane]: {},
-        [Constants.geometries.cylinder]: {},
+        [Constants.geometries.plane]: {
+          width: 1,
+          height: 1,
+          widthSegments: 1,
+          heightSegments: 1
+        },
+        [Constants.geometries.cylinder]: {
+          radiusTop: 1,
+          radiusBottom: 1,
+          height: 1,
+          radialSegments: 8,
+          heightSegments: 1,
+          openEnded: false,
+          thetaStart: 0,
+          thetaLength: Math.PI * 2
+        },
         [Constants.geometries.icosahedron]: {}
       };
     }

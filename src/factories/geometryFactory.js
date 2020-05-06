@@ -40,11 +40,25 @@ export default {
       }
 
       case Constants.geometries.plane: {
-        return new Three.PlaneGeometry(1, 1, 1, 1);
+        return new Three.PlaneGeometry(
+          params.width,
+          params.height,
+          params.widthSegments,
+          params.heightSegments
+        );
       }
 
       case Constants.geometries.cylinder: {
-        return new Three.CylinderGeometry(0.5, 0.5, 2, 10);
+        return new Three.CylinderGeometry(
+          params.radiusTop,
+          params.radiusBottom,
+          params.height,
+          params.radialSegments,
+          params.heightSegments,
+          params.openEnded,
+          params.thetaStart,
+          params.thetaLength
+        );
       }
 
       case Constants.geometries.icosahedron: {
