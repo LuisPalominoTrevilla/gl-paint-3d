@@ -9,7 +9,10 @@ import {
   faIceCream,
   faBrush,
   faCircle,
-  faGem
+  faGem,
+  faEdit,
+  faTrashAlt,
+  faObjectGroup
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faCube);
@@ -19,4 +22,8 @@ library.add(faSquare);
 library.add(faBrush);
 library.add(faCircle);
 library.add(faGem);
+library.add(faEdit);
+library.add(faTrashAlt);
+library.add(faObjectGroup);
+
 Vue.component('font-awesome-icon', FontAwesomeIcon);

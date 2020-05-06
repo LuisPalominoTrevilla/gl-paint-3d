@@ -42,5 +42,10 @@ module.exports = {
     init: 0,
     play: 1,
     pause: 2
+  },
+  editingStates: {
+    select: 0,
+    delete: 1,
+    group: 2
   }
 };
