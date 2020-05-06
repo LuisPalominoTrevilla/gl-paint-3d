@@ -2,10 +2,17 @@ import * as Three from 'three';
 import Constants from '../constants';
 
 export default {
-  create(type) {
+  create({ type, params }) {
     switch (type) {
       case Constants.geometries.cube: {
-        return new Three.BoxGeometry(0.2, 0.2, 0.2);
+        return new Three.BoxGeometry(
+          params.width,
+          params.height,
+          params.depth,
+          params.widthSegments,
+          params.heightSegments,
+          params.depthSegments
+        );
       }
 
       case Constants.geometries.sphere: {
