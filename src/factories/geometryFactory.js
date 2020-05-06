@@ -16,7 +16,15 @@ export default {
       }
 
       case Constants.geometries.sphere: {
-        return new Three.SphereGeometry(0.2, 9, 9);
+        return new Three.SphereGeometry(
+          params.radius,
+          params.widthSegments,
+          params.heightSegments,
+          params.phiStart,
+          params.phiLength,
+          params.thetaStart,
+          params.thetaLength
+        );
       }
 
       case Constants.geometries.cone: {

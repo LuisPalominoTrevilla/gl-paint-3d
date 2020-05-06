@@ -8,6 +8,11 @@
         class="ma-7"
         :params="geometryParameters[geometryType]"
       />
+      <sphere-geometry-inputs
+        v-show="sphereSelected"
+        class="ma-7"
+        :params="geometryParameters[geometryType]"
+      />
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
@@ -19,11 +24,13 @@
 
 <script>
 import BoxGeometryInputs from './BoxGeometryInputs';
+import SphereGeometryInputs from './SphereGeometryInputs';
 import Constants from '../../constants';
 
 export default {
   components: {
-    BoxGeometryInputs
+    BoxGeometryInputs,
+    SphereGeometryInputs
   },
   data() {
     return {
@@ -43,6 +50,9 @@ export default {
     },
     cubeSelected() {
       return this.geometryType === Constants.geometries.cube;
+    },
+    sphereSelected() {
+      return this.geometryType === Constants.geometries.sphere;
     }
   },
   methods: {
@@ -68,7 +78,15 @@ export default {
           heightSegments: 1,
           depthSegments: 1
         },
-        [Constants.geometries.sphere]: {},
+        [Constants.geometries.sphere]: {
+          radius: 1,
+          widthSegments: 8,
+          heightSegments: 6,
+          phiStart: 0,
+          phiLength: Math.PI * 2,
+          thetaStart: 0,
+          thetaLength: Math.PI
+        },
         [Constants.geometries.cone]: {},
         [Constants.geometries.plane]: {},
         [Constants.geometries.cylinder]: {},
