@@ -23,6 +23,54 @@ module.exports = {
     4: 'circle',
     5: 'gem'
   },
+  geometryParameters: {
+    0: {
+      width: 1,
+      height: 1,
+      depth: 1,
+      widthSegments: 1,
+      heightSegments: 1,
+      depthSegments: 1
+    },
+    1: {
+      radius: 1,
+      widthSegments: 8,
+      heightSegments: 6,
+      phiStart: 0,
+      phiLength: Math.PI * 2,
+      thetaStart: 0,
+      thetaLength: Math.PI
+    },
+    2: {
+      radius: 1,
+      height: 1,
+      radialSegments: 8,
+      heightSegments: 1,
+      openEnded: false,
+      thetaStart: 0,
+      thetaLength: Math.PI * 2
+    },
+    3: {
+      width: 1,
+      height: 1,
+      widthSegments: 1,
+      heightSegments: 1
+    },
+    4: {
+      radiusTop: 1,
+      radiusBottom: 1,
+      height: 1,
+      radialSegments: 8,
+      heightSegments: 1,
+      openEnded: false,
+      thetaStart: 0,
+      thetaLength: Math.PI * 2
+    },
+    5: {
+      radius: 1,
+      detail: 0
+    }
+  },
   appModes: {
     editing: 0,
     animation: 1

@@ -84,54 +84,7 @@ export default {
       });
     },
     resetParams() {
-      this.geometryParameters = {
-        [Constants.geometries.cube]: {
-          width: 1,
-          height: 1,
-          depth: 1,
-          widthSegments: 1,
-          heightSegments: 1,
-          depthSegments: 1
-        },
-        [Constants.geometries.sphere]: {
-          radius: 1,
-          widthSegments: 8,
-          heightSegments: 6,
-          phiStart: 0,
-          phiLength: Math.PI * 2,
-          thetaStart: 0,
-          thetaLength: Math.PI
-        },
-        [Constants.geometries.cone]: {
-          radius: 1,
-          height: 1,
-          radialSegments: 8,
-          heightSegments: 1,
-          openEnded: false,
-          thetaStart: 0,
-          thetaLength: Math.PI * 2
-        },
-        [Constants.geometries.plane]: {
-          width: 1,
-          height: 1,
-          widthSegments: 1,
-          heightSegments: 1
-        },
-        [Constants.geometries.cylinder]: {
-          radiusTop: 1,
-          radiusBottom: 1,
-          height: 1,
-          radialSegments: 8,
-          heightSegments: 1,
-          openEnded: false,
-          thetaStart: 0,
-          thetaLength: Math.PI * 2
-        },
-        [Constants.geometries.icosahedron]: {
-          radius: 1,
-          detail: 0
-        }
-      };
+      this.geometryParameters = Constants.geometryParameters;
     }
   }
 };
