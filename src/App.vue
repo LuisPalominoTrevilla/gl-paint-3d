@@ -139,11 +139,21 @@ export default {
           this.$refs.canvas.removeMesh(this.meshWrappers[selectedIdx].mesh);
           this.meshWrappers.splice(selectedIdx, 1);
           break;
+        case Constants.editingStates.group: {
+          if (this.groupingMeshes.includes(selectedIdx)) {
+            this.deselectMeshes(selectedIdx);
+            return;
+          }
+          this.meshWrappers[selectedIdx].selectMesh();
+          this.groupingMeshes.push(selectedIdx);
+          break;
+        }
+
         default:
           console.error('Invalid current state');
       }
     },
-    deselectMeshes() {
+    deselectMeshes(idx = null) {
       switch (this.editingState) {
         case Constants.editingStates.select:
           if (this.selectedMesh) {
@@ -152,7 +162,12 @@ export default {
           }
           break;
         case Constants.editingStates.group:
-          // TODO: Iterate over meshes idx and deselect them
+          if (idx !== null) {
+            this.groupingMeshes = this.groupingMeshes.filter(_ => _ !== idx);
+            this.meshWrappers[idx].deselectMesh();
+            return;
+          }
+          this.groupingMeshes.forEach(_ => this.meshWrappers[_].deselectMesh());
           this.groupingMeshes = [];
           break;
       }
