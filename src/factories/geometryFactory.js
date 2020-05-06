@@ -62,7 +62,7 @@ export default {
       }
 
       case Constants.geometries.icosahedron: {
-        return new Three.IcosahedronGeometry(0.4, 0);
+        return new Three.IcosahedronGeometry(params.radius, params.detail);
       }
       default:
         return null;

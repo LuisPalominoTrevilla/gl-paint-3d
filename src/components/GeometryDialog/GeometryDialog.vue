@@ -23,6 +23,7 @@ import SphereGeometryInputs from './SphereGeometryInputs';
 import ConeGeometryInputs from './ConeGeometryInputs';
 import PlaneGeometryInputs from './PlaneGeometryInputs';
 import CylinderGeometryInputs from './CylinderGeometryInputs';
+import IcosahedronGeometryInputs from './IcosahedronGeometryInputs';
 import Constants from '../../constants';
 
 export default {
@@ -31,7 +32,8 @@ export default {
     SphereGeometryInputs,
     ConeGeometryInputs,
     PlaneGeometryInputs,
-    CylinderGeometryInputs
+    CylinderGeometryInputs,
+    IcosahedronGeometryInputs
   },
   data() {
     return {
@@ -125,7 +127,10 @@ export default {
           thetaStart: 0,
           thetaLength: Math.PI * 2
         },
-        [Constants.geometries.icosahedron]: {}
+        [Constants.geometries.icosahedron]: {
+          radius: 1,
+          detail: 0
+        }
       };
     }
   }
