@@ -21,6 +21,7 @@
           <editing-toolbox
             :selectedMesh="selectedMesh"
             :numberGroupingMeshes="groupingMeshes.length"
+            @create-group="createGroup"
           />
         </div>
       </div>
@@ -174,6 +175,20 @@ export default {
           this.groupingMeshes = [];
           break;
       }
+    },
+    createGroup() {
+      const selectedIdx = this.groupingMeshes;
+      const selectedMeshes = selectedIdx.map(
+        idx => this.meshWrappers[idx].mesh
+      );
+      this.deselectMeshes();
+      selectedMeshes.forEach(mesh => this.$refs.canvas.removeMesh(mesh));
+      this.meshWrappers = this.meshWrappers.filter(
+        (_, idx) => !selectedIdx.includes(idx)
+      );
+      const meshGroup = new MeshWrapper({ meshes: selectedMeshes });
+      this.meshWrappers.push(meshGroup);
+      this.$refs.canvas.addMesh(meshGroup.mesh, false);
     }
   }
 };

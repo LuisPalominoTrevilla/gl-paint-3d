@@ -85,9 +85,9 @@ export default {
       this.renderer.render(this.scene, this.camera);
     },
 
-    addMesh(mesh) {
+    addMesh(mesh, selectMesh = true) {
       this.scene.add(mesh);
-      this.$emit('select-mesh', mesh.uuid);
+      if (selectMesh) this.$emit('select-mesh', mesh.uuid);
     },
 
     removeMesh(mesh) {

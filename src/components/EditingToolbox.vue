@@ -32,7 +32,12 @@
     <div v-show="numberGroupingMeshes > 0">
       <v-chip>Selected Objects</v-chip>
       <p>{{ numberGroupingMeshes }}</p>
-      <v-btn class="white--text" color="blue darken-3">Group</v-btn>
+      <v-btn
+        class="white--text"
+        color="blue darken-3"
+        @click="$emit('create-group')"
+        >Group</v-btn
+      >
     </div>
   </div>
 </template>
