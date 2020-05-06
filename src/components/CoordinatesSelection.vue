@@ -25,6 +25,7 @@
       type="number"
     />
     <v-btn
+      :disabled="disableSetCoordinates"
       class="white--text"
       color="blue darken-3"
       @click="$emit('coordinates-set')"
@@ -43,6 +44,15 @@ export default {
     coordinates: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    disableSetCoordinates() {
+      return (
+        isNaN(parseFloat(this.coordinates.x)) ||
+        isNaN(parseFloat(this.coordinates.y)) ||
+        isNaN(parseFloat(this.coordinates.z))
+      );
     }
   }
 };

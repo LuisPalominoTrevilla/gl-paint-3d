@@ -3,16 +3,29 @@ import * as Three from 'three';
 class MeshWrapper {
   constructor({ geometry, material }) {
     this.mesh = new Three.Mesh(geometry, material);
-    this.animation = {};
+    this.animation = {
+      animate: false,
+      rotation: new Three.Vector3(0, 0, 0)
+    };
     this.initData = {};
     this.prepareAnimation();
   }
 
-  prepareAnimation() {}
+  prepareAnimation() {
+    this.initData.rotation = this.mesh.rotation.clone();
+  }
 
-  animationStep() {}
+  animationStep() {
+    if (!this.animation.animate) return;
+    this.mesh.rotation.x += this.animation.rotation.x;
+    this.mesh.rotation.y += this.animation.rotation.y;
+    this.mesh.rotation.z += this.animation.rotation.z;
+  }
 
-  resetAnimationData() {}
+  resetAnimationData() {
+    const { x, y, z } = this.initData.rotation;
+    this.mesh.rotation.set(x, y, z);
+  }
 
   selectMesh() {
     this.prevColor = this.mesh.material.color.clone();

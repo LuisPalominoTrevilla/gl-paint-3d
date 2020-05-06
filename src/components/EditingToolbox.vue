@@ -1,8 +1,8 @@
 <template>
   <div class="card editing-toolbox">
     <div v-show="selectedMesh !== null">
-      <div class="mb-4">
-        <v-chip>Properties</v-chip>
+      <v-chip>Properties</v-chip>
+      <div class="mb-4 d-flex flex-column">
         <coordinates-selection
           title="Position"
           :coordinates="position"
@@ -20,6 +20,14 @@
         />
       </div>
       <v-chip>Animation</v-chip>
+      <div class="d-flex flex-column align-center">
+        <coordinates-selection
+          title="Rotation"
+          :coordinates="animationRotation"
+          @coordinates-set="setAnimationRotation"
+        />
+        <v-switch v-model="meshAnimation.animate" label="Animate" />
+      </div>
     </div>
   </div>
 </template>
@@ -41,15 +49,40 @@ export default {
     return {
       position: {},
       rotation: {},
-      scaling: {}
+      scaling: {},
+      animationRotation: {}
     };
+  },
+  computed: {
+    meshAnimation() {
+      return this.selectedMesh ? this.selectedMesh.animation : {};
+    }
   },
   watch: {
     selectedMesh(newMesh) {
       if (newMesh === null) return;
       this.position = newMesh.mesh.position.clone();
       this.rotation = newMesh.mesh.rotation.clone();
+      this.rotation.x = parseFloat(
+        (((this.rotation.x * 180) / Math.PI) % 360).toFixed(2)
+      );
+      this.rotation.y = parseFloat(
+        (((this.rotation.y * 180) / Math.PI) % 360).toFixed(2)
+      );
+      this.rotation.z = parseFloat(
+        (((this.rotation.z * 180) / Math.PI) % 360).toFixed(2)
+      );
       this.scaling = newMesh.mesh.scale.clone();
+      this.animationRotation = newMesh.animation.rotation.clone();
+      this.animationRotation.x = parseFloat(
+        (((this.animationRotation.x * 180) / Math.PI) % 360).toFixed(2)
+      );
+      this.animationRotation.y = parseFloat(
+        (((this.animationRotation.y * 180) / Math.PI) % 360).toFixed(2)
+      );
+      this.animationRotation.z = parseFloat(
+        (((this.animationRotation.z * 180) / Math.PI) % 360).toFixed(2)
+      );
     }
   },
   methods: {
@@ -67,6 +100,13 @@ export default {
     setScaling() {
       const { x, y, z } = this.scaling;
       this.selectedMesh.mesh.scale.set(x, y, z);
+    },
+    setAnimationRotation() {
+      let { x, y, z } = this.animationRotation;
+      x *= Math.PI / 180;
+      y *= Math.PI / 180;
+      z *= Math.PI / 180;
+      this.meshAnimation.rotation.set(x, y, z);
     }
   }
 };

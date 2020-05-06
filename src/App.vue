@@ -9,6 +9,7 @@
           <paint-canvas
             :canvasDimensions="canvasDimensions"
             :cameraWrapper="cameraWrapper"
+            :meshWrappers="meshWrappers"
             :appMode="appMode"
             :animationState="animationState"
             @select-mesh="selectMesh"
@@ -102,6 +103,7 @@ export default {
       this.appMode = newMode;
       if (newMode === Constants.appModes.animation) {
         this.cameraWrapper.prepareAnimation();
+        this.meshWrappers.forEach(wrapper => wrapper.prepareAnimation());
         this.deselectMeshes();
       }
     },
@@ -109,6 +111,7 @@ export default {
       this.animationState = newState;
       if (newState === Constants.animationStates.init) {
         this.cameraWrapper.resetAnimationData();
+        this.meshWrappers.forEach(wrapper => wrapper.resetAnimationData());
       }
     },
     editStateChanged(newState) {

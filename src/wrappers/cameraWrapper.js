@@ -74,11 +74,8 @@ class CameraWrapper {
   }
 
   resetAnimationData() {
-    this.camera.position.set(
-      this.initData.position.x,
-      this.initData.position.y,
-      this.initData.position.z
-    );
+    const { x, y, z } = this.initData.position;
+    this.camera.position.set(x, y, z);
     if (this.animation.fixedTarget) {
       this.camera.lookAt(this.animation.target);
     } else {
