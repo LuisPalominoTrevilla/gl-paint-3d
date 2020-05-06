@@ -7,11 +7,18 @@
         class="ma-7"
         :is="geometryComponent"
         :params="geometryParams"
+        @correct-data="hasErrors = !$event"
       />
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="selectParameters">Save</v-btn>
+        <v-btn
+          :disabled="disableCreate"
+          color="blue darken-1"
+          text
+          @click="selectParameters"
+          >Create</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -24,7 +31,9 @@ import ConeGeometryInputs from './ConeGeometryInputs';
 import PlaneGeometryInputs from './PlaneGeometryInputs';
 import CylinderGeometryInputs from './CylinderGeometryInputs';
 import IcosahedronGeometryInputs from './IcosahedronGeometryInputs';
+import OBJGeometryInputs from './OBJGeometryInputs';
 import Constants from '../../constants';
+import { cloneDeep } from 'lodash';
 
 export default {
   components: {
@@ -33,7 +42,8 @@ export default {
     ConeGeometryInputs,
     PlaneGeometryInputs,
     CylinderGeometryInputs,
-    IcosahedronGeometryInputs
+    IcosahedronGeometryInputs,
+    OBJGeometryInputs
   },
   data() {
     return {
@@ -46,14 +56,19 @@ export default {
         [Constants.geometries.cone]: 'ConeGeometryInputs',
         [Constants.geometries.plane]: 'PlaneGeometryInputs',
         [Constants.geometries.cylinder]: 'CylinderGeometryInputs',
-        [Constants.geometries.icosahedron]: 'IcosahedronGeometryInputs'
-      }
+        [Constants.geometries.icosahedron]: 'IcosahedronGeometryInputs',
+        [Constants.geometries.obj]: 'OBJGeometryInputs'
+      },
+      hasErrors: false
     };
   },
   beforeMount() {
     this.resetParams();
   },
   computed: {
+    disableCreate() {
+      return this.hasErrors;
+    },
     dialogTitle() {
       return this.geometryType != null
         ? `${Constants.geometryNames[this.geometryType]} properties`
@@ -84,7 +99,7 @@ export default {
       });
     },
     resetParams() {
-      this.geometryParameters = Constants.geometryParameters;
+      this.geometryParameters = cloneDeep(Constants.geometryParameters);
     }
   }
 };

@@ -5,7 +5,8 @@ module.exports = {
     cone: 2,
     plane: 3,
     cylinder: 4,
-    icosahedron: 5
+    icosahedron: 5,
+    obj: 6
   },
   geometryNames: {
     0: 'Cube',
@@ -13,7 +14,8 @@ module.exports = {
     2: 'Cone',
     3: 'Plane',
     4: 'Cylinder',
-    5: 'Icosahedron'
+    5: 'Icosahedron',
+    6: 'OBJ'
   },
   geometryIcon: {
     0: 'cube',
@@ -21,7 +23,8 @@ module.exports = {
     2: 'ice-cream',
     3: 'square',
     4: 'circle',
-    5: 'gem'
+    5: 'gem',
+    6: 'file-code'
   },
   geometryParameters: {
     0: {
@@ -69,6 +72,10 @@ module.exports = {
     5: {
       radius: 1,
       detail: 0
+    },
+    6: {
+      file: null,
+      text: ''
     }
   },
   appModes: {

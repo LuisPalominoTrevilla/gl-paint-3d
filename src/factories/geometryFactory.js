@@ -1,5 +1,8 @@
 import * as Three from 'three';
 import Constants from '../constants';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+
+const loader = new OBJLoader();
 
 export default {
   create({ type, params }) {
@@ -64,6 +67,12 @@ export default {
       case Constants.geometries.icosahedron: {
         return new Three.IcosahedronGeometry(params.radius, params.detail);
       }
+
+      case Constants.geometries.obj: {
+        const obj = loader.parse(params.text);
+        return obj.children[0].geometry;
+      }
+
       default:
         return null;
     }
