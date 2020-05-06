@@ -11,6 +11,7 @@
         <MaterialTool :materialName="chosenMaterial" :materialKey="materialValues[chosenMaterial]" :materialData="materialData" @updateData="updateData"/>
       </v-col>
     </v-row>
+    <v-btn>ok</v-btn>
   </div>
 </template>
 
@@ -53,6 +54,7 @@ export default {
             materialValues: Constants.materials,
             chosenMaterial : "meshBasic",
             materialData : materialInfo,
+            selected: false,
         });
     },
     methods:{
@@ -62,6 +64,9 @@ export default {
       },
       updateData(key,field,value){
         this.materialData[key][field]=value;
+      },
+      changeSelected(){
+        this.selected=!this.selected;
       }
     }
 };

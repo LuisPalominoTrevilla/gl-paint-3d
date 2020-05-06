@@ -18,7 +18,6 @@
 <script>
 import GeometryTool from './GeometryTool';
 import GeometryDialog from './GeometryDialog';
-import GeometryFactory from '../factories/geometryFactory';
 import Constants from '../constants';
 
 export default {
@@ -36,7 +35,8 @@ export default {
 
   methods: {
     createMesh({ type }) {
-      const geometry = GeometryFactory.create(type);
+      this.$emit('create-mesh', type);
+      //const geometry = GeometryFactory.create(type);
       // TODO: Create selected material using own factory
       //const material = new Three.MeshBasicMaterial();
       //this.$emit('create-mesh', { geometry, material });

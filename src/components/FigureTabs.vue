@@ -27,6 +27,7 @@
     import MaterialToolbox from './MaterialToolbox';
     import GeometryFactory from '../factories/geometryFactory';
     import MaterialFactory from '../factories/materialFactory';
+    import * as Three from 'three';
 
 
     export default {
@@ -45,9 +46,14 @@
                 const geometry = GeometryFactory.create(geometryType);
                 // TODO: Create selected material using own factory
                 let currentMaterial= this.$refs.toolbox;
-                let data= currentMaterial.getMaterialData();
-                //const material = new Three.MeshBasicMaterial();
-                const material = MaterialFactory.create(data.datakey,data.params);
+                var material;
+                if(currentMaterial){
+                    let data= currentMaterial.getMaterialData();
+                    material = MaterialFactory.create(data.datakey,data.params);
+                }
+                else{
+                    material = new Three.MeshBasicMaterial();
+                }
                 this.$emit('create-mesh', { geometry, material });
             },
         }

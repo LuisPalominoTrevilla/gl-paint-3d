@@ -18,12 +18,11 @@ export default {
             let colorValue = parseInt ( params.specular.slice(0,-2).replace("#","0x"), 16 );
             params.specular = colorValue;
         }
+        
         /*
         Object.keys(params).forEach( param => {
-            if(typeof(params[param])==='object'){
-                if(params[param]!= null){
-                    console.log(params[param]);
-                }
+            if(!isNaN(params[param])){
+                params[param]=parseInt(param);
             }
         });*/
         switch(type){
@@ -52,6 +51,7 @@ export default {
                 return new Three.MeshNormalMaterial(params);
             }
             case Constants.materials.meshPhong:{
+                console.log(params);
                 return new Three.MeshPhongMaterial(params);
             }
             case Constants.materials.meshPhysical:{

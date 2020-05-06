@@ -37,7 +37,8 @@ export default {
       scene: null,
       renderer: null,
       mouse: null,
-      raycaster: null
+      raycaster: null,
+      light:null,
     };
   },
 
@@ -60,6 +61,8 @@ export default {
     init() {
       const container = this.$refs.container;
       this.scene = new Three.Scene();
+      this.light = new Three.AmbientLight();
+      this.scene.add(this.light);
       this.raycaster = new Three.Raycaster();
       this.renderer = new Three.WebGLRenderer({ antialias: true });
       this.renderer.setSize(
