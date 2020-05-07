@@ -9,7 +9,9 @@ module.exports = {
     tetrahedron: 6,
     dodecahedron: 7,
     octahedron: 8,
-    obj: 9
+    circle: 9,
+    ring: 10,
+    obj: 11
   },
   geometryNames: {
     0: 'Cube',
@@ -21,7 +23,9 @@ module.exports = {
     6: 'Tetrahedron',
     7: 'Dodecahedron',
     8: 'Octahedron',
-    9: 'OBJ'
+    9: 'Circle',
+    10: 'Ring',
+    11: 'OBJ'
   },
   geometryIcon: {
     0: 'cube',
@@ -33,7 +37,9 @@ module.exports = {
     6: 'gem',
     7: 'gem',
     8: 'gem',
-    9: 'file-code'
+    9: 'circle',
+    10: 'ring',
+    11: 'file-code'
   },
   geometryParameters: {
     0: {
@@ -95,6 +101,20 @@ module.exports = {
       detail: 0
     },
     9: {
+      radius: 1,
+      segments: 8,
+      thetaStart: 0,
+      thetaLength: Math.PI * 2
+    },
+    10: {
+      innerRadius: 0.5,
+      outerRadius: 1,
+      thetaSegments: 8,
+      phiSegments: 8,
+      thetaStart: 0,
+      thetaLength: Math.PI * 2
+    },
+    11: {
       file: null,
       text: ''
     }

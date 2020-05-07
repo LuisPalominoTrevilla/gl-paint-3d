@@ -13,7 +13,8 @@ import {
   faEdit,
   faTrashAlt,
   faObjectGroup,
-  faFileCode
+  faFileCode,
+  faRing
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faCube);
@@ -27,5 +28,6 @@ library.add(faEdit);
 library.add(faTrashAlt);
 library.add(faObjectGroup);
 library.add(faFileCode);
+library.add(faRing);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

@@ -71,6 +71,24 @@ export default {
       case Constants.geometries.octahedron: {
         return new Three.OctahedronGeometry(params.radius, params.detail);
       }
+      case Constants.geometries.circle: {
+        return new Three.CircleGeometry(
+          params.radius,
+          params.segments,
+          params.thetaStart,
+          params.thetaLength
+        );
+      }
+      case Constants.geometries.ring: {
+        return new Three.RingGeometry(
+          params.innerRadius,
+          params.outerRadius,
+          params.thetaSegments,
+          params.phiSegments,
+          params.thetaStart,
+          params.thetaLength
+        );
+      }
       case Constants.geometries.obj: {
         const obj = loader.parse(params.text);
         return obj.children[0].geometry;
