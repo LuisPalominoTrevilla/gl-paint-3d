@@ -34,6 +34,8 @@ import SahedronGeometryInputs from './SahedronGeometryInputs';
 import CircleGeometryInputs from './CircleGeometryInputs';
 import RingGeometryInputs from './RingGeometryInputs';
 import OBJGeometryInputs from './OBJGeometryInputs';
+import TorusGeometryInputs from './TorusGeometryInputs';
+import TorusKnotGeometryInputs from './TorusKnotGeometryInputs';
 import Constants from '../../constants';
 import { cloneDeep } from 'lodash';
 
@@ -47,7 +49,9 @@ export default {
     SahedronGeometryInputs,
     CircleGeometryInputs,
     RingGeometryInputs,
-    OBJGeometryInputs
+    OBJGeometryInputs,
+    TorusGeometryInputs,
+    TorusKnotGeometryInputs
   },
   data() {
     return {
@@ -66,6 +70,8 @@ export default {
         [Constants.geometries.octahedron]: 'SahedronGeometryInputs',
         [Constants.geometries.circle]: 'CircleGeometryInputs',
         [Constants.geometries.ring]: 'RingGeometryInputs',
+        [Constants.geometries.torus]: 'TorusGeometryInputs',
+        [Constants.geometries.torusKnot]: 'TorusKnotGeometryInputs',
         [Constants.geometries.obj]: 'OBJGeometryInputs'
       },
       hasErrors: false

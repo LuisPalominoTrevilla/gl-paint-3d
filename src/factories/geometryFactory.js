@@ -82,6 +82,23 @@ export default {
         const obj = loader.parse(params.text);
         return obj.children[0].geometry;
       }
+      case Constants.geometries.torus:
+        return new Three.TorusGeometry(
+          params.radius,
+          params.tube,
+          params.radialSegments,
+          params.tubularSegments,
+          params.arc
+        );
+      case Constants.geometries.torusKnot:
+        return new Three.TorusKnotGeometry(
+          params.radius,
+          params.tube,
+          params.tubularSegments,
+          params.radialSegments,
+          params.p,
+          params.q
+        );
       default:
         return null;
     }

@@ -11,7 +11,9 @@ module.exports = {
     octahedron: 8,
     circle: 9,
     ring: 10,
-    obj: 11
+    obj: 11,
+    torus: 12,
+    torusKnot: 13
   },
   geometryNames: {
     0: 'Cube',
@@ -25,7 +27,9 @@ module.exports = {
     8: 'Octahedron',
     9: 'Circle',
     10: 'Ring',
-    11: 'OBJ'
+    11: 'OBJ',
+    12: 'Torus',
+    13: 'TorusKnot'
   },
   geometryIcon: {
     0: 'cube',
@@ -39,7 +43,9 @@ module.exports = {
     8: 'gem',
     9: 'circle',
     10: 'ring',
-    11: 'file-code'
+    11: 'file-code',
+    12: 'life-ring',
+    13: 'life-ring'
   },
   geometryParameters: {
     0: {
@@ -117,6 +123,21 @@ module.exports = {
     11: {
       file: null,
       text: ''
+    },
+    12: {
+      radius: 1,
+      tube: 0.4,
+      radialSegments: 8,
+      tubularSegments: 6,
+      arc: Math.PI * 2
+    },
+    13: {
+      radius: 1,
+      tube: 0.4,
+      tubularSegments: 6,
+      radialSegments: 8,
+      p: 2,
+      q: 3
     }
   },
   appModes: {
