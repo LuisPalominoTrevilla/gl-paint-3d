@@ -5,7 +5,7 @@
         <font-awesome-icon :icon="geometryIcon" />
       </v-btn>
     </template>
-    <span>{{ name }}</span>
+    <span>{{ geometryName }}</span>
   </v-tooltip>
 </template>
 
@@ -14,10 +14,6 @@ import Constants from '../constants';
 
 export default {
   props: {
-    name: {
-      type: String,
-      required: true
-    },
     geometry: {
       type: Number,
       required: true
@@ -27,6 +23,9 @@ export default {
     geometryIcon() {
       const icon = Constants.geometryIcon[this.geometry];
       return icon ? icon : 'brush';
+    },
+    geometryName() {
+      return Constants.geometryNames[this.geometry];
     }
   },
   methods: {

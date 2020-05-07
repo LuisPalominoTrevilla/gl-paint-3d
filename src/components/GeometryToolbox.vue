@@ -4,9 +4,8 @@
       <v-col cols="6" v-for="geometry in geometries" :key="geometry">
         <geometry-tool
           class="geometry"
-          :geometry="FigureIcon[geometry]"
+          :geometry="geometry"
           @create-geometry="$refs.geometryDialog.open($event)"
-          :name="geometry"
         />
       </v-col>
     </v-row>
@@ -29,8 +28,7 @@ export default {
 
   data() {
     return {
-      geometries: Object.keys(Constants.geometries),
-      FigureIcon: Constants.geometries
+      geometries: Object.values(Constants.geometries)
     };
   },
 
