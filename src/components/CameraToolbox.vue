@@ -62,21 +62,21 @@
           Position
         </v-chip>
         <v-text-field
-          v-model="newPosition.x"
+          v-model.number="newPosition.x"
           class="number-input"
           label="x"
           hide-details="auto"
           type="number"
         />
         <v-text-field
-          v-model="newPosition.y"
+          v-model.number="newPosition.y"
           class="number-input"
           label="y"
           hide-details="auto"
           type="number"
         />
         <v-text-field
-          v-model="newPosition.z"
+          v-model.number="newPosition.z"
           class="number-input"
           label="z"
           hide-details="auto"
@@ -98,21 +98,21 @@
           Target
         </v-chip>
         <v-text-field
-          v-model="target.x"
+          v-model.number="target.x"
           class="number-input"
           label="x"
           hide-details="auto"
           type="number"
         />
         <v-text-field
-          v-model="target.y"
+          v-model.number="target.y"
           class="number-input"
           label="y"
           hide-details="auto"
           type="number"
         />
         <v-text-field
-          v-model="target.z"
+          v-model.number="target.z"
           class="number-input"
           label="z"
           hide-details="auto"

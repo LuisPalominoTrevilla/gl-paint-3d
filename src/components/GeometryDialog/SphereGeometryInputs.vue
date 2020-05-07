@@ -2,21 +2,21 @@
   <div>
     <div class="d-flex">
       <v-text-field
-        v-model="params.radius"
+        v-model.number="params.radius"
         class="number-input"
         label="radius"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.widthSegments"
+        v-model.number="params.widthSegments"
         class="number-input"
         label="widthSegments"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.heightSegments"
+        v-model.number="params.heightSegments"
         class="number-input"
         label="heightSegments"
         hide-details="auto"
@@ -25,28 +25,28 @@
     </div>
     <div class="d-flex">
       <v-text-field
-        v-model="phiStart"
+        v-model.number="phiStart"
         class="number-input"
         label="phiStart"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="phiLength"
+        v-model.number="phiLength"
         class="number-input"
         label="phiLength"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="thetaStart"
+        v-model.number="thetaStart"
         class="number-input"
         label="thetaStart"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="thetaLength"
+        v-model.number="thetaLength"
         class="number-input"
         label="thetaLength"
         hide-details="auto"

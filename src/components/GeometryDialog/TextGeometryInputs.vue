@@ -14,21 +14,21 @@
         accept="application/json"
       ></v-file-input>
       <v-text-field
-        v-model="params.size"
+        v-model.number="params.size"
         class="number-input"
         label="size"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.height"
+        v-model.number="params.height"
         class="number-input"
         label="height"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.curveSegments"
+        v-model.number="params.curveSegments"
         class="number-input"
         label="curveSegments"
         hide-details="auto"
@@ -42,28 +42,28 @@
         label="bevelEnabled"
       />
       <v-text-field
-        v-model="params.bevelThickness"
+        v-model.number="params.bevelThickness"
         class="number-input"
         label="bevelThickness"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.bevelSize"
+        v-model.number="params.bevelSize"
         class="number-input"
         label="bevelSize"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.bevelOffset"
+        v-model.number="params.bevelOffset"
         class="number-input"
         label="bevelOffset"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.bevelSegments"
+        v-model.number="params.bevelSegments"
         class="number-input"
         label="bevelSegments"
         hide-details="auto"

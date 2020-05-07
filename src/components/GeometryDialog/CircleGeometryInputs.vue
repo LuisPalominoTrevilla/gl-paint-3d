@@ -2,28 +2,28 @@
   <div>
     <div class="d-flex">
       <v-text-field
-        v-model="params.radius"
+        v-model.number="params.radius"
         class="number-input"
         label="radius"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.segments"
+        v-model.number="params.segments"
         class="number-input"
         label="segments"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="thetaStart"
+        v-model.number="thetaStart"
         class="number-input"
         label="thetaStart"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="thetaLength"
+        v-model.number="thetaLength"
         class="number-input"
         label="thetaLength"
         hide-details="auto"

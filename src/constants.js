@@ -177,8 +177,8 @@ module.exports = {
   },
   cameraParams: {
     0: {
-      fovy: 60,
-      near: 0.01,
+      fovy: 70,
+      near: 0.1,
       far: 1000,
       initPos: {
         x: 0,

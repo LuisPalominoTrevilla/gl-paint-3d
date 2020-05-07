@@ -25,21 +25,21 @@
         <div v-show="cameraType === cameraTypes.perspective">
           <div class="d-flex">
             <v-text-field
-              v-model="cameraParams[cameraType].fovy"
+              v-model.number="cameraParams[cameraType].fovy"
               class="camera-input"
               label="Fovy"
               hide-details="auto"
               type="number"
             />
             <v-text-field
-              v-model="cameraParams[cameraType].near"
+              v-model.number="cameraParams[cameraType].near"
               class="camera-input"
               label="Near"
               hide-details="auto"
               type="number"
             />
             <v-text-field
-              v-model="cameraParams[cameraType].far"
+              v-model.number="cameraParams[cameraType].far"
               class="camera-input"
               label="Far"
               hide-details="auto"
@@ -50,28 +50,28 @@
         <div v-show="cameraType === cameraTypes.orthographic">
           <div class="d-flex">
             <v-text-field
-              v-model="cameraParams[cameraType].left"
+              v-model.number="cameraParams[cameraType].left"
               class="camera-input"
               label="Left"
               hide-details="auto"
               type="number"
             />
             <v-text-field
-              v-model="cameraParams[cameraType].right"
+              v-model.number="cameraParams[cameraType].right"
               class="camera-input"
               label="Right"
               hide-details="auto"
               type="number"
             />
             <v-text-field
-              v-model="cameraParams[cameraType].top"
+              v-model.number="cameraParams[cameraType].top"
               class="camera-input"
               label="Top"
               hide-details="auto"
               type="number"
             />
             <v-text-field
-              v-model="cameraParams[cameraType].bottom"
+              v-model.number="cameraParams[cameraType].bottom"
               class="camera-input"
               label="Bottom"
               hide-details="auto"
@@ -80,14 +80,14 @@
           </div>
           <div class="d-flex">
             <v-text-field
-              v-model="cameraParams[cameraType].near"
+              v-model.number="cameraParams[cameraType].near"
               class="camera-input"
               label="Near"
               hide-details="auto"
               type="number"
             />
             <v-text-field
-              v-model="cameraParams[cameraType].far"
+              v-model.number="cameraParams[cameraType].far"
               class="camera-input"
               label="Far"
               hide-details="auto"
@@ -97,21 +97,21 @@
         </div>
         <div class="d-flex">
           <v-text-field
-            v-model="cameraParams[cameraType].initPos.x"
+            v-model.number="cameraParams[cameraType].initPos.x"
             class="camera-input"
             label="x"
             hide-details="auto"
             type="number"
           />
           <v-text-field
-            v-model="cameraParams[cameraType].initPos.y"
+            v-model.number="cameraParams[cameraType].initPos.y"
             class="camera-input"
             label="y"
             hide-details="auto"
             type="number"
           />
           <v-text-field
-            v-model="cameraParams[cameraType].initPos.z"
+            v-model.number="cameraParams[cameraType].initPos.z"
             class="camera-input"
             label="z"
             hide-details="auto"

@@ -2,28 +2,28 @@
   <div>
     <div class="d-flex">
       <v-text-field
-        v-model="params.innerRadius"
+        v-model.number="params.innerRadius"
         class="number-input"
         label="innerRadius"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.outerRadius"
+        v-model.number="params.outerRadius"
         class="number-input"
         label="outerRadius"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.thetaSegments"
+        v-model.number="params.thetaSegments"
         class="number-input"
         label="thetaSegments"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.phiSegments"
+        v-model.number="params.phiSegments"
         class="number-input"
         label="phiSegments"
         hide-details="auto"
@@ -32,14 +32,14 @@
     </div>
     <div class="d-flex">
       <v-text-field
-        v-model="thetaStart"
+        v-model.number="thetaStart"
         class="number-input"
         label="thetaStart"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="thetaLength"
+        v-model.number="thetaLength"
         class="number-input"
         label="thetaLength"
         hide-details="auto"

@@ -4,21 +4,21 @@
       {{ title }}
     </v-chip>
     <v-text-field
-      v-model="coordinates.x"
+      v-model.number="coordinates.x"
       class="number-input"
       label="x"
       hide-details="auto"
       type="number"
     />
     <v-text-field
-      v-model="coordinates.y"
+      v-model.number="coordinates.y"
       class="number-input"
       label="y"
       hide-details="auto"
       type="number"
     />
     <v-text-field
-      v-model="coordinates.z"
+      v-model.number="coordinates.z"
       class="number-input"
       label="z"
       hide-details="auto"
