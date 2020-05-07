@@ -29,6 +29,13 @@
         max="180"
         label="Roll"
       ></v-slider>
+      <v-btn
+        :disabled="isAnimationMode"
+        class="white--text"
+        color="blue darken-3"
+        @click="$refs.cameraDialog.open()"
+        >Change Camera</v-btn
+      >
     </div>
     <div class="vertical-sliders">
       <v-slider
@@ -151,10 +158,15 @@
         </div>
       </div>
     </div>
+    <camera-dialog
+      ref="cameraDialog"
+      @create-camera="$emit('create-camera', $event)"
+    />
   </div>
 </template>
 
 <script>
+import CameraDialog from './CameraDialog';
 import Constants from '../constants';
 
 export default {
@@ -167,6 +179,9 @@ export default {
       type: Number,
       required: true
     }
+  },
+  components: {
+    CameraDialog
   },
   data() {
     return {

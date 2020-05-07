@@ -170,5 +170,34 @@ module.exports = {
     select: 0,
     delete: 1,
     group: 2
+  },
+  cameraTypes: {
+    perspective: 0,
+    orthographic: 1
+  },
+  cameraParams: {
+    0: {
+      fovy: 60,
+      near: 0.01,
+      far: 1000,
+      initPos: {
+        x: 0,
+        y: 0,
+        z: 4
+      }
+    },
+    1: {
+      left: -2,
+      right: 2,
+      top: 2,
+      bottom: -2,
+      near: 0.01,
+      far: 1000,
+      initPos: {
+        x: 0,
+        y: 0,
+        z: 4
+      }
+    }
   }
 };

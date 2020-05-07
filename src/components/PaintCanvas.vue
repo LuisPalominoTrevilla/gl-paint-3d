@@ -51,6 +51,15 @@ export default {
     }
   },
 
+  watch: {
+    camera: {
+      handler(newCamera, oldCamera) {
+        this.scene.remove(oldCamera);
+        this.scene.add(newCamera);
+      }
+    }
+  },
+
   mounted() {
     this.init();
     this.animate();
@@ -60,6 +69,7 @@ export default {
     init() {
       const container = this.$refs.container;
       this.scene = new Three.Scene();
+      this.scene.add(this.camera);
       this.raycaster = new Three.Raycaster();
       this.renderer = new Three.WebGLRenderer({ antialias: true });
       this.renderer.setSize(

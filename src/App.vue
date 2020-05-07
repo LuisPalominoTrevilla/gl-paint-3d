@@ -37,7 +37,11 @@
           />
         </div>
         <div class="right">
-          <camera-toolbox :cameraWrapper="cameraWrapper" :appMode="appMode" />
+          <camera-toolbox
+            :cameraWrapper="cameraWrapper"
+            :appMode="appMode"
+            @create-camera="createCamera"
+          />
         </div>
       </div>
     </div>
@@ -89,15 +93,15 @@ export default {
       width: 800,
       height: 550
     };
-    this.cameraWrapper = new CameraWrapper({
-      fovy: 70,
-      aspect: this.canvasDimensions.width / this.canvasDimensions.height,
-      near: 0.01,
-      far: 100,
-      initZ: 4
+    this.createCamera({
+      type: Constants.cameraTypes.perspective,
+      params: Constants.cameraParams[Constants.cameraTypes.perspective]
     });
   },
   methods: {
+    createCamera(params) {
+      this.cameraWrapper = new CameraWrapper(params, this.canvasDimensions);
+    },
     createMesh(meshData) {
       const meshWrapper = new MeshWrapper(meshData);
       this.meshWrappers.push(meshWrapper);

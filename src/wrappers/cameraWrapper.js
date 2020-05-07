@@ -1,9 +1,30 @@
 import * as Three from 'three';
+import Constants from '../constants';
 
 class CameraWrapper {
-  constructor({ fovy, aspect, near, far, initZ = 1 }) {
-    this.camera = new Three.PerspectiveCamera(fovy, aspect, near, far);
-    this.camera.position.z = initZ;
+  constructor({ type, params }, dimensions) {
+    const aspect = dimensions.width / dimensions.height;
+    if (type === Constants.cameraTypes.perspective) {
+      this.camera = new Three.PerspectiveCamera(
+        params.fovy,
+        aspect,
+        params.near,
+        params.far
+      );
+    } else {
+      this.camera = new Three.OrthographicCamera(
+        params.left * aspect,
+        params.right * aspect,
+        params.top,
+        params.bottom,
+        params.near,
+        params.far
+      );
+    }
+    const { x, y, z } = params.initPos;
+    this.camera.position.x = x;
+    this.camera.position.y = y;
+    this.camera.position.z = z;
     this.animation = {
       target: new Three.Vector3(0, 0, 0),
       fixedTarget: false,
