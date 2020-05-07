@@ -17,7 +17,6 @@ export default {
           params.depthSegments
         );
       }
-
       case Constants.geometries.sphere: {
         return new Three.SphereGeometry(
           params.radius,
@@ -29,7 +28,6 @@ export default {
           params.thetaLength
         );
       }
-
       case Constants.geometries.cone: {
         return new Three.ConeGeometry(
           params.radius,
@@ -41,7 +39,6 @@ export default {
           params.thetaLength
         );
       }
-
       case Constants.geometries.plane: {
         return new Three.PlaneGeometry(
           params.width,
@@ -50,7 +47,6 @@ export default {
           params.heightSegments
         );
       }
-
       case Constants.geometries.cylinder: {
         return new Three.CylinderGeometry(
           params.radiusTop,
@@ -63,16 +59,22 @@ export default {
           params.thetaLength
         );
       }
-
       case Constants.geometries.icosahedron: {
         return new Three.IcosahedronGeometry(params.radius, params.detail);
       }
-
+      case Constants.geometries.tetrahedron: {
+        return new Three.TetrahedronGeometry(params.radius, params.detail);
+      }
+      case Constants.geometries.dodecahedron: {
+        return new Three.DodecahedronGeometry(params.radius, params.detail);
+      }
+      case Constants.geometries.octahedron: {
+        return new Three.OctahedronGeometry(params.radius, params.detail);
+      }
       case Constants.geometries.obj: {
         const obj = loader.parse(params.text);
         return obj.children[0].geometry;
       }
-
       default:
         return null;
     }

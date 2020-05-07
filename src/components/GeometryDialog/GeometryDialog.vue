@@ -30,7 +30,7 @@ import SphereGeometryInputs from './SphereGeometryInputs';
 import ConeGeometryInputs from './ConeGeometryInputs';
 import PlaneGeometryInputs from './PlaneGeometryInputs';
 import CylinderGeometryInputs from './CylinderGeometryInputs';
-import IcosahedronGeometryInputs from './IcosahedronGeometryInputs';
+import SahedronGeometryInputs from './SahedronGeometryInputs';
 import OBJGeometryInputs from './OBJGeometryInputs';
 import Constants from '../../constants';
 import { cloneDeep } from 'lodash';
@@ -42,7 +42,7 @@ export default {
     ConeGeometryInputs,
     PlaneGeometryInputs,
     CylinderGeometryInputs,
-    IcosahedronGeometryInputs,
+    SahedronGeometryInputs,
     OBJGeometryInputs
   },
   data() {
@@ -56,7 +56,10 @@ export default {
         [Constants.geometries.cone]: 'ConeGeometryInputs',
         [Constants.geometries.plane]: 'PlaneGeometryInputs',
         [Constants.geometries.cylinder]: 'CylinderGeometryInputs',
-        [Constants.geometries.icosahedron]: 'IcosahedronGeometryInputs',
+        [Constants.geometries.icosahedron]: 'SahedronGeometryInputs',
+        [Constants.geometries.tetrahedron]: 'SahedronGeometryInputs',
+        [Constants.geometries.dodecahedron]: 'SahedronGeometryInputs',
+        [Constants.geometries.octahedron]: 'SahedronGeometryInputs',
         [Constants.geometries.obj]: 'OBJGeometryInputs'
       },
       hasErrors: false
