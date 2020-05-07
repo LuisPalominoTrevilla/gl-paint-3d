@@ -36,6 +36,7 @@ import RingGeometryInputs from './RingGeometryInputs';
 import OBJGeometryInputs from './OBJGeometryInputs';
 import TorusGeometryInputs from './TorusGeometryInputs';
 import TorusKnotGeometryInputs from './TorusKnotGeometryInputs';
+import TextGeometryInputs from './TextGeometryInputs';
 import Constants from '../../constants';
 import { cloneDeep } from 'lodash';
 
@@ -51,7 +52,8 @@ export default {
     RingGeometryInputs,
     OBJGeometryInputs,
     TorusGeometryInputs,
-    TorusKnotGeometryInputs
+    TorusKnotGeometryInputs,
+    TextGeometryInputs
   },
   data() {
     return {
@@ -72,7 +74,8 @@ export default {
         [Constants.geometries.ring]: 'RingGeometryInputs',
         [Constants.geometries.torus]: 'TorusGeometryInputs',
         [Constants.geometries.torusKnot]: 'TorusKnotGeometryInputs',
-        [Constants.geometries.obj]: 'OBJGeometryInputs'
+        [Constants.geometries.obj]: 'OBJGeometryInputs',
+        [Constants.geometries.text]: 'TextGeometryInputs'
       },
       hasErrors: false
     };

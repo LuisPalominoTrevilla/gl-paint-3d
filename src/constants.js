@@ -13,7 +13,8 @@ module.exports = {
     ring: 10,
     obj: 11,
     torus: 12,
-    torusKnot: 13
+    torusKnot: 13,
+    text: 14
   },
   geometryNames: {
     0: 'Cube',
@@ -29,7 +30,8 @@ module.exports = {
     10: 'Ring',
     11: 'OBJ',
     12: 'Torus',
-    13: 'TorusKnot'
+    13: 'TorusKnot',
+    14: 'Text'
   },
   geometryIcon: {
     0: 'cube',
@@ -45,7 +47,8 @@ module.exports = {
     10: 'ring',
     11: 'file-code',
     12: 'life-ring',
-    13: 'life-ring'
+    13: 'life-ring',
+    14: 'font'
   },
   geometryParameters: {
     0: {
@@ -138,6 +141,20 @@ module.exports = {
       radialSegments: 8,
       p: 2,
       q: 3
+    },
+    14: {
+      text: 'Hello',
+      file: null,
+      fontJson: {},
+      font: null,
+      size: 10,
+      height: 5,
+      curveSegments: 12,
+      bevelEnabled: false,
+      bevelThickness: 1,
+      bevelSize: 0.8,
+      bevelOffset: 0,
+      bevelSegments: 3
     }
   },
   appModes: {

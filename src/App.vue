@@ -94,7 +94,7 @@ export default {
       aspect: this.canvasDimensions.width / this.canvasDimensions.height,
       near: 0.01,
       far: 100,
-      initZ: 2
+      initZ: 4
     });
   },
   methods: {

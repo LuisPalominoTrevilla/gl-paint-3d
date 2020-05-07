@@ -15,7 +15,8 @@ import {
   faObjectGroup,
   faFileCode,
   faRing,
-  faLifeRing
+  faLifeRing,
+  faFont
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(faCube);
@@ -31,5 +32,6 @@ library.add(faObjectGroup);
 library.add(faFileCode);
 library.add(faRing);
 library.add(faLifeRing);
+library.add(faFont);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

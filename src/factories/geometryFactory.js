@@ -3,6 +3,7 @@ import Constants from '../constants';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 
 const loader = new OBJLoader();
+const fontLoader = new Three.FontLoader();
 
 export default {
   create({ type, params }) {
@@ -99,6 +100,10 @@ export default {
           params.p,
           params.q
         );
+      case Constants.geometries.text: {
+        params.font = fontLoader.parse(params.fontJson);
+        return new Three.TextGeometry(params.text, params);
+      }
       default:
         return null;
     }
