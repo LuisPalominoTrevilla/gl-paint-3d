@@ -70,7 +70,8 @@ export default {
     init() {
       const container = this.$refs.container;
       this.scene = new Three.Scene();
-      this.light = new Three.AmbientLight();
+      this.light = new Three.DirectionalLight(0xffffff);
+      this.light.position.set(0,1,1);
       this.scene.add(this.light);
       this.raycaster = new Three.Raycaster();
       this.renderer = new Three.WebGLRenderer({ antialias: true });

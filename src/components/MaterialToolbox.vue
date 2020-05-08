@@ -74,32 +74,6 @@ const materialInfo = {
     wireframeLinejoin: 'round',
     wireframeLinewidth: 1
   },
-  3: {
-    alphaMap: null,
-    depthPacking: Three.BasicDepthPacking,
-    displacementMap: null,
-    displacementScale: 1,
-    displacementBias: 0,
-    fog: false,
-    map: null,
-    morphTargets: false,
-    skinning: false,
-    wireframe: false,
-    wireframeLinewidth: 1
-  },
-  4: {
-    alphaMap: null,
-    displacementMap: null,
-    displacementScale: 1,
-    displacementBias: 0,
-    farDistance: 1,
-    fog: false,
-    map: null,
-    morphTargets: false,
-    nearDistance: 1,
-    referencePosition: Three.Vector3(),
-    skinning: false
-  },
   5: {
     alphaMap: null,
     aoMap: null,
@@ -140,22 +114,6 @@ const materialInfo = {
     normalMapType: Three.TangentSpaceNormalMap,
     normalScale: Three.Vector2(1, 1),
     skinning: false
-  },
-  7: {
-    bumpMap: null,
-    bumpScale: 1,
-    displacementMap: null,
-    displacementScale: 1,
-    displacementBias: 0,
-    fog: false,
-    morphNormals: false,
-    morphTargets: false,
-    normalMap: null,
-    normalMapType: Three.TangentSpaceNormalMap,
-    normalScale: Three.Vector2(1, 1),
-    skinning: false,
-    wireframe: false,
-    wireframeLinewidth: 1
   },
   8: {
     alphaMap: null,
@@ -308,9 +266,6 @@ const materialInfo = {
     size: 1.0,
     sizeAttenuation: true
   },
-  13: {},
-  14: {},
-  15: { transparent: true },
   16: {
     alphaMap: null,
     color: '#FFFFFF',
@@ -357,7 +312,14 @@ export default {
             let b = this.currentMeshMaterial.mesh.prevColor.b;
             let rgbString = this.rgbToHex(r * 255, g * 255, b * 255);
             meshJson[field] = rgbString;
-          } else {
+          }
+          else if(field==='emissive' || field === 'specular'){
+            let r = this.currentMeshMaterial.mesh.material[field].r;
+            let g = this.currentMeshMaterial.mesh.material[field].g;
+            let b = this.currentMeshMaterial.mesh.material[field].b;
+            meshJson[field]= this.rgbToHex(r*255,g*255,b*255);
+          }
+          else {
             let meshMaterialValue = this.currentMeshMaterial.mesh.material[
               field
             ];
