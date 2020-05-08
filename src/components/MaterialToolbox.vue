@@ -312,14 +312,12 @@ export default {
             let b = this.currentMeshMaterial.mesh.prevColor.b;
             let rgbString = this.rgbToHex(r * 255, g * 255, b * 255);
             meshJson[field] = rgbString;
-          }
-          else if(field==='emissive' || field === 'specular'){
+          } else if (field === 'emissive' || field === 'specular') {
             let r = this.currentMeshMaterial.mesh.material[field].r;
             let g = this.currentMeshMaterial.mesh.material[field].g;
             let b = this.currentMeshMaterial.mesh.material[field].b;
-            meshJson[field]= this.rgbToHex(r*255,g*255,b*255);
-          }
-          else {
+            meshJson[field] = this.rgbToHex(r * 255, g * 255, b * 255);
+          } else {
             let meshMaterialValue = this.currentMeshMaterial.mesh.material[
               field
             ];
