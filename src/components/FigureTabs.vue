@@ -15,7 +15,7 @@
             </v-tab-item>
     
             <v-tab-item>
-                <MaterialToolbox ref="toolbox" @/>
+                <MaterialToolbox ref="toolbox" :selectedMaterial="selected" :currentMeshMaterial="currentMesh" :currentMeshMaterialName="getMaterialName" @changeMesh="updateMesh"/>
             </v-tab-item>
         </v-tabs-items>
     </v-card>
@@ -36,14 +36,30 @@
             MaterialToolbox,
 
         },
+        props:{
+            selected:{type: Boolean},
+            currentMesh:{type: Object},
+        }
+        ,
+        computed:{
+            getMaterialName(){
+                console.log("Here");
+                if(this.currentMesh){
+                    let name= this.currentMesh.mesh.material.type.slice(0,-8);
+                    name=name.replace(name[0],name[0].toLowerCase());
+                    return name;
+                }
+                return "";
+            }
+        },
         data(){
             return({
                 tab:null,
             });
         },
         methods:{
-            createMesh(geometryType) {
-                const geometry = GeometryFactory.create(geometryType);
+            createMesh({geometryType,geometryParams}) {
+                const geometry = GeometryFactory.create({type:geometryType,params:geometryParams});
                 // TODO: Create selected material using own factory
                 let currentMaterial= this.$refs.toolbox;
                 var material;
@@ -54,8 +70,12 @@
                 else{
                     material = new Three.MeshBasicMaterial();
                 }
-                this.$emit('create-mesh', { geometry, material });
+                this.$emit('create-mesh', { geometry:geometry, material:material });
             },
+            updateMesh(data,key){
+                let newMaterial = MaterialFactory.create(key,data);
+                this.$emit("updateMesh", newMaterial);
+            }
         }
     }
 </script>

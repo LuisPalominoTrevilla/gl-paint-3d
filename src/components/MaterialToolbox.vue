@@ -2,16 +2,24 @@
   <div class="toolbox card">
     <h3>Material</h3>
     <v-row>
-      <v-col>
+      <v-col v-if="!selectedMaterial">
           <v-select
           :items="materials"
           label="Choose"
           v-model="chosenMaterial"
         ></v-select>
-        <MaterialTool :materialName="chosenMaterial" :materialKey="materialValues[chosenMaterial]" :materialData="materialData" @updateData="updateData"/>
+        <MaterialTool :materialName="chosenMaterial" :materialKey="materialValues[chosenMaterial]" :materialData="materialData" @updateData="updateData" :materialSelected="false" />
+      </v-col>
+      <v-col v-else>
+          <v-select
+          :items="materials"
+          label="Choose"
+          v-model="currentMeshMaterialName"
+        ></v-select>
+          <MaterialTool :materialName="currentMeshMaterialName" :materialKey="materialValues[currentMeshMaterialName]" :materialData="getMeshMaterial" ref="selectedMaterialToolbox" :materialSelected="selectedMaterial" @updateMaterialData="updateMaterialData"/>
+          <v-btn v-on:click="submitChanges">Ok</v-btn>
       </v-col>
     </v-row>
-    <v-btn>ok</v-btn>
   </div>
 </template>
 
@@ -48,6 +56,47 @@ export default {
     components:{
         MaterialTool,
     },
+    props:{
+      selectedMaterial:{type: Boolean},
+      currentMeshMaterial:{type: Object},
+      currentMeshMaterialName: {type: String},
+    },
+    computed:{
+      getMaterialName(){
+        if(this.currentMeshMaterial){
+          let matName=this.currentMeshMaterial.mesh.material.type.slice(0,-8);
+          matName = matName.replace(matName[0],matName[0].toLowerCase());
+          return matName;
+        }
+        return "nothing"
+      }
+      ,
+      getMeshMaterial(){
+        if(this.currentMeshMaterial){
+          let keyVal= this.materialValues[this.getMaterialName];
+          let meshJson={};
+          Object.keys(this.materialData[keyVal]).forEach( field => {
+            if(field==='color'){
+              let r=this.currentMeshMaterial.prevColor.r;
+              let g=this.currentMeshMaterial.prevColor.g;
+              let b=this.currentMeshMaterial.prevColor.b;
+              let rgbString = this.rgbToHex(r*255,g*255,b*255);
+              meshJson[field]=rgbString; 
+            }
+            else{
+              let meshMaterialValue = this.currentMeshMaterial.mesh.material[field];
+              meshJson[field]=meshMaterialValue;
+            }
+          });
+          let meshMaterialData=JSON.parse(JSON.stringify(this.materialData));
+          meshMaterialData[keyVal]=meshJson;
+          return meshMaterialData;
+        }
+        
+        return {}
+      }
+    }
+    ,
     data: function(){
         return({
             materials : Object.keys(Constants.materials),
@@ -55,6 +104,8 @@ export default {
             chosenMaterial : "meshBasic",
             materialData : materialInfo,
             selected: false,
+            meshName: this.currentMeshMaterialName,
+            selectedMeshMaterial: null,
         });
     },
     methods:{
@@ -65,8 +116,26 @@ export default {
       updateData(key,field,value){
         this.materialData[key][field]=value;
       },
-      changeSelected(){
-        this.selected=!this.selected;
+      updateMaterialData(key,field,value){
+        console.log(key,field,value);
+        let MeshFields = JSON.parse(JSON.stringify(this.getMeshMaterial));
+        MeshFields[key][field]=value;
+        this.selectedMeshMaterial=MeshFields[key];
+      }
+      ,
+      valToHex(c){
+        let hex = c.toString(16);
+        return hex.length == 1? "0" + hex : hex;
+      },
+      rgbToHex(r,g,b){
+        return "#" + this.valToHex(r) + this.valToHex(g) + this.valToHex(b);
+      },
+      submitChanges(){
+        if(this.selectedMeshMaterial){
+          this.$emit("changeMesh",this.selectedMeshMaterial, this.materialValues[this.getMaterialName]);
+        }else{
+          console.log("No changes");
+        }
       }
     }
 };

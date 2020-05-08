@@ -32,6 +32,11 @@ class MeshWrapper {
     this.mesh.material.color.set(0xc44f36);
   }
 
+  updateMesh(material) {
+      this.mesh.material.dispose();
+      this.mesh.material=material;
+  }
+
   deselectMesh() {
     // TODO: add new material if one was given
     if (this.prevColor) {

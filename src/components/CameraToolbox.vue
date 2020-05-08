@@ -235,7 +235,7 @@ export default {
       },
       set(val) {
         if (this.isAnimationMode) return;
-        this.camera.position.y = val * this.stepFactor;
+        this.camera.position.y = -val * this.stepFactor;
       }
     },
     zoom: {

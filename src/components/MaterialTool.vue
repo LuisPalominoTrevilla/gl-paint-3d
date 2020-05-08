@@ -1,7 +1,7 @@
 <template>
     <v-form>
         <v-expansion-panels accordion>
-        <MaterialInput v-for="(material) in Object.keys(materialFields)" :key="material" :field="material" :default="materialFields[material]" @updateData="updateData"/>
+        <MaterialInput v-for="(material) in Object.keys(materialFields)" :key="material" :field="material" :defaultVal="materialFields[material]" @updateData="updateData" @changeMaterialData="updateMatData" :selected="materialSelected" />
         </v-expansion-panels>
     </v-form>
 </template>
@@ -27,6 +27,9 @@ export default {
         materialData:{
             type: Object,
             required: true,
+        },
+        materialSelected:{
+            type: Boolean,
         }
     },
     computed:{
@@ -42,6 +45,9 @@ export default {
         },
         updateData(field,value){
             this.$emit("updateData",this.materialKey,field,value);
+        },
+        updateMatData(field,value){
+            this.$emit("updateMaterialData",this.materialKey,field,value);
         }
     }
 }

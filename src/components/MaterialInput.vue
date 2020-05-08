@@ -2,11 +2,11 @@
     <v-expansion-panel>
         <v-expansion-panel-header>{{field}}</v-expansion-panel-header>
         <v-expansion-panel-content>
-        <v-color-picker v-if="field === 'color' || field==='emissive' || field==='specular'" v-model="current" v-on:input="handler"></v-color-picker>
-        <v-text-field v-else-if="typeof(this.default) === 'number'" v-model="current" v-on:input="handler"></v-text-field>
-        <v-switch v-else-if="typeof(this.default)==='boolean'" v-model="current" v-on:change="handler"></v-switch>
-        <v-file-input v-else-if="this.default==null" accept="image/*" label="Texture" v-model="current" v-on:change="handler" default=null></v-file-input>
-        <v-text-field v-if="typeof(this.default) === 'string'" v-model="current" v-on:input="handler"></v-text-field>
+        <v-color-picker v-if="field === 'color' || field==='emissive' || field==='specular'" :value="defaultVal" v-on:input="handler" ref="Colorinp"></v-color-picker>
+        <v-text-field v-else-if="typeof(this.defaultVal) === 'number'" v-model="current" v-on:input="handler" ref="inp"></v-text-field>
+        <v-switch v-else-if="typeof(this.defaultVal)==='boolean'" v-model="current" v-on:change="handler" ref="inp"></v-switch>
+        <v-file-input v-else-if="this.defaultVal==null" accept="image/*" label="Texture" v-model="current" v-on:change="handler"  ref="inp"></v-file-input>
+        <v-text-field v-else-if="typeof(this.defaultVal) === 'string'" v-model="current" v-on:input="handler" ref="inp"></v-text-field>
         </v-expansion-panel-content>
     </v-expansion-panel>
 </template>
@@ -20,19 +20,39 @@
             field:{
                 required:true,
             },
-            default:{
+            defaultVal:{
                 required:true,
             },
+            selected:{
+                type:Boolean,
+            }
         },
+        computed:{
+            getDefault(){
+                console.log(this.defaultVal);
+                return this.defaultVal;
+            }
+        }
+        ,
         data(){
             return({
-                current:this.default,
+                current:this.defaultVal,
             });
         },
         methods:{
             handler(){
-                this.$emit("updateData",this.field,this.current);
+                let colorRef=this.$refs.Colorinp;
+                if(colorRef){
+                    this.current=(colorRef.$children[0].$children[0].color.hex);
+                }
+                if(!this.selected){
+                    this.$emit("updateData",this.field,this.current);
+                }
+                else{
+                    this.$emit("changeMaterialData", this.field, this.current);
+                }
             }
+
         }
     }
 </script>

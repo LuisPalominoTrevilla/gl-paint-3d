@@ -5,17 +5,17 @@ export default {
     create(type,params){
         if(params.color){
             console.log(params.color);
-            let colorValue = parseInt ( params.color.slice(0,-2).replace("#","0x"), 16 );
+            let colorValue = parseInt ( params.color.replace("#","0x"), 16 );
             params.color = colorValue;
         }
         if(params.emissive){
             console.log(params.emissive);
-            let colorValue = parseInt ( params.emissive.slice(0,-2).replace("#","0x"), 16 );
+            let colorValue = parseInt ( params.emissive.replace("#","0x"), 16 );
             params.emissive = colorValue;
         }
         if(params.specular){
             console.log(params.specular);
-            let colorValue = parseInt ( params.specular.slice(0,-2).replace("#","0x"), 16 );
+            let colorValue = parseInt ( params.specular.replace("#","0x"), 16 );
             params.specular = colorValue;
         }
         
