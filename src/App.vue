@@ -3,7 +3,13 @@
     <div class="main-container">
       <div class="top-container">
         <div class="left">
-          <FigureTabs @create-mesh="createMesh" @updateMesh="updateMesh" ref="figureComp" :selected="isSelected" :currentMesh="selectedMesh"/>
+          <figure-tabs
+            @create-mesh="createMesh"
+            @updateMesh="updateMesh"
+            ref="figureComp"
+            :selected="isSelected"
+            :currentMesh="selectedMesh"
+          />
         </div>
         <div class="center">
           <paint-canvas
@@ -87,8 +93,8 @@ export default {
         ? null
         : this.meshWrappers[this.selectedMeshIdx];
     },
-    isSelected(){
-      return (this.selectedMesh!== null);
+    isSelected() {
+      return this.selectedMesh !== null;
     }
   },
   beforeMount() {
@@ -110,11 +116,10 @@ export default {
       this.meshWrappers.push(meshWrapper);
       this.$refs.canvas.addMesh(meshWrapper.mesh);
     },
-    updateMesh(material){
+    updateMesh(material) {
       this.meshWrappers[this.selectedMeshIdx].updateMesh(material);
-      this.selectedMeshIdx=null;
-    }
-    ,
+      this.selectedMeshIdx = null;
+    },
     modeChanged(newMode) {
       this.appMode = newMode;
       if (newMode === Constants.appModes.animation) {

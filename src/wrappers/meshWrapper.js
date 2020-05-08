@@ -47,12 +47,11 @@ class MeshWrapper {
   }
 
   updateMesh(material) {
-      this.mesh.material.dispose();
-      this.mesh.material=material;
+    this.mesh.material.dispose();
+    this.mesh.material = material;
   }
 
   deselectMesh() {
-    // TODO: add new material if one was given (only for signle components)
     const objMeshes = [this.mesh];
     while (objMeshes.length > 0) {
       const mesh = objMeshes.pop();

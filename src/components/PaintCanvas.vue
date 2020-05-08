@@ -38,7 +38,7 @@ export default {
       renderer: null,
       mouse: null,
       raycaster: null,
-      light:null,
+      light: null
     };
   },
 
