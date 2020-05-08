@@ -18,7 +18,11 @@
           />
         </div>
         <div class="right">
-          <editing-toolbox :selectedMesh="selectedMesh" />
+          <editing-toolbox
+            :selectedMesh="selectedMesh"
+            :numberGroupingMeshes="groupingMeshes.length"
+            @create-group="createGroup"
+          />
         </div>
       </div>
       <div class="bottom-container">
@@ -33,7 +37,11 @@
           />
         </div>
         <div class="right">
-          <camera-toolbox :cameraWrapper="cameraWrapper" :appMode="appMode" />
+          <camera-toolbox
+            :cameraWrapper="cameraWrapper"
+            :appMode="appMode"
+            @create-camera="createCamera"
+          />
         </div>
       </div>
     </div>
@@ -88,15 +96,15 @@ export default {
       width: 800,
       height: 550
     };
-    this.cameraWrapper = new CameraWrapper({
-      fovy: 70,
-      aspect: this.canvasDimensions.width / this.canvasDimensions.height,
-      near: 0.01,
-      far: 100,
-      initZ: 2
+    this.createCamera({
+      type: Constants.cameraTypes.perspective,
+      params: Constants.cameraParams[Constants.cameraTypes.perspective]
     });
   },
   methods: {
+    createCamera(params) {
+      this.cameraWrapper = new CameraWrapper(params, this.canvasDimensions);
+    },
     createMesh(meshData) {
       const meshWrapper = new MeshWrapper(meshData);
       this.meshWrappers.push(meshWrapper);
@@ -147,11 +155,21 @@ export default {
           this.$refs.canvas.removeMesh(this.meshWrappers[selectedIdx].mesh);
           this.meshWrappers.splice(selectedIdx, 1);
           break;
+        case Constants.editingStates.group: {
+          if (this.groupingMeshes.includes(selectedIdx)) {
+            this.deselectMeshes(selectedIdx);
+            return;
+          }
+          this.meshWrappers[selectedIdx].selectMesh();
+          this.groupingMeshes.push(selectedIdx);
+          break;
+        }
+
         default:
           console.error('Invalid current state');
       }
     },
-    deselectMeshes() {
+    deselectMeshes(idx = null) {
       switch (this.editingState) {
         case Constants.editingStates.select:
           if (this.selectedMesh) {
@@ -160,10 +178,29 @@ export default {
           }
           break;
         case Constants.editingStates.group:
-          // TODO: Iterate over meshes idx and deselect them
+          if (idx !== null) {
+            this.groupingMeshes = this.groupingMeshes.filter(_ => _ !== idx);
+            this.meshWrappers[idx].deselectMesh();
+            return;
+          }
+          this.groupingMeshes.forEach(_ => this.meshWrappers[_].deselectMesh());
           this.groupingMeshes = [];
           break;
       }
+    },
+    createGroup() {
+      const selectedIdx = this.groupingMeshes;
+      const selectedMeshes = selectedIdx.map(
+        idx => this.meshWrappers[idx].mesh
+      );
+      this.deselectMeshes();
+      selectedMeshes.forEach(mesh => this.$refs.canvas.removeMesh(mesh));
+      this.meshWrappers = this.meshWrappers.filter(
+        (_, idx) => !selectedIdx.includes(idx)
+      );
+      const meshGroup = new MeshWrapper({ meshes: selectedMeshes });
+      this.meshWrappers.push(meshGroup);
+      this.$refs.canvas.addMesh(meshGroup.mesh, false);
     }
   }
 };

@@ -2,30 +2,30 @@
   <div>
     <div class="d-flex">
       <v-text-field
-        v-model.number="params.width"
+        v-model.number="params.radius"
         class="number-input"
-        label="width"
+        label="radius"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model.number="params.height"
+        v-model.number="params.segments"
         class="number-input"
-        label="height"
+        label="segments"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model.number="params.widthSegments"
+        v-model.number="thetaStart"
         class="number-input"
-        label="widthSegments"
+        label="thetaStart"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model.number="params.heightSegments"
+        v-model.number="thetaLength"
         class="number-input"
-        label="heightSegments"
+        label="thetaLength"
         hide-details="auto"
         type="number"
       />
@@ -39,6 +39,28 @@ export default {
     params: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    thetaStart: {
+      get() {
+        return parseFloat(
+          ((this.params.thetaStart * 180) / Math.PI).toFixed(2)
+        );
+      },
+      set(deg) {
+        this.params.thetaStart = (deg * Math.PI) / 180;
+      }
+    },
+    thetaLength: {
+      get() {
+        return parseFloat(
+          ((this.params.thetaLength * 180) / Math.PI).toFixed(2)
+        );
+      },
+      set(deg) {
+        this.params.thetaLength = (deg * Math.PI) / 180;
+      }
     }
   }
 };

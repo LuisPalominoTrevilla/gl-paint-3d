@@ -2,42 +2,35 @@
   <div>
     <div class="d-flex">
       <v-text-field
-        v-model.number="params.radius"
+        v-model.number="params.innerRadius"
         class="number-input"
-        label="radius"
+        label="innerRadius"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model.number="params.widthSegments"
+        v-model.number="params.outerRadius"
         class="number-input"
-        label="widthSegments"
+        label="outerRadius"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model.number="params.heightSegments"
+        v-model.number="params.thetaSegments"
         class="number-input"
-        label="heightSegments"
+        label="thetaSegments"
+        hide-details="auto"
+        type="number"
+      />
+      <v-text-field
+        v-model.number="params.phiSegments"
+        class="number-input"
+        label="phiSegments"
         hide-details="auto"
         type="number"
       />
     </div>
     <div class="d-flex">
-      <v-text-field
-        v-model.number="phiStart"
-        class="number-input"
-        label="phiStart"
-        hide-details="auto"
-        type="number"
-      />
-      <v-text-field
-        v-model.number="phiLength"
-        class="number-input"
-        label="phiLength"
-        hide-details="auto"
-        type="number"
-      />
       <v-text-field
         v-model.number="thetaStart"
         class="number-input"
@@ -65,22 +58,6 @@ export default {
     }
   },
   computed: {
-    phiStart: {
-      get() {
-        return parseFloat(((this.params.phiStart * 180) / Math.PI).toFixed(2));
-      },
-      set(deg) {
-        this.params.phiStart = (deg * Math.PI) / 180;
-      }
-    },
-    phiLength: {
-      get() {
-        return parseFloat(((this.params.phiLength * 180) / Math.PI).toFixed(2));
-      },
-      set(deg) {
-        this.params.phiLength = (deg * Math.PI) / 180;
-      }
-    },
     thetaStart: {
       get() {
         return parseFloat(

@@ -29,6 +29,13 @@
         max="180"
         label="Roll"
       ></v-slider>
+      <v-btn
+        :disabled="isAnimationMode"
+        class="white--text"
+        color="blue darken-3"
+        @click="$refs.cameraDialog.open()"
+        >Change Camera</v-btn
+      >
     </div>
     <div class="vertical-sliders">
       <v-slider
@@ -55,21 +62,21 @@
           Position
         </v-chip>
         <v-text-field
-          v-model="newPosition.x"
+          v-model.number="newPosition.x"
           class="number-input"
           label="x"
           hide-details="auto"
           type="number"
         />
         <v-text-field
-          v-model="newPosition.y"
+          v-model.number="newPosition.y"
           class="number-input"
           label="y"
           hide-details="auto"
           type="number"
         />
         <v-text-field
-          v-model="newPosition.z"
+          v-model.number="newPosition.z"
           class="number-input"
           label="z"
           hide-details="auto"
@@ -91,21 +98,21 @@
           Target
         </v-chip>
         <v-text-field
-          v-model="target.x"
+          v-model.number="target.x"
           class="number-input"
           label="x"
           hide-details="auto"
           type="number"
         />
         <v-text-field
-          v-model="target.y"
+          v-model.number="target.y"
           class="number-input"
           label="y"
           hide-details="auto"
           type="number"
         />
         <v-text-field
-          v-model="target.z"
+          v-model.number="target.z"
           class="number-input"
           label="z"
           hide-details="auto"
@@ -151,10 +158,15 @@
         </div>
       </div>
     </div>
+    <camera-dialog
+      ref="cameraDialog"
+      @create-camera="$emit('create-camera', $event)"
+    />
   </div>
 </template>
 
 <script>
+import CameraDialog from './CameraDialog';
 import Constants from '../constants';
 
 export default {
@@ -167,6 +179,9 @@ export default {
       type: Number,
       required: true
     }
+  },
+  components: {
+    CameraDialog
   },
   data() {
     return {
@@ -235,7 +250,7 @@ export default {
       },
       set(val) {
         if (this.isAnimationMode) return;
-        this.camera.position.y = -val * this.stepFactor;
+        this.camera.position.y = val * this.stepFactor;
       }
     },
     zoom: {

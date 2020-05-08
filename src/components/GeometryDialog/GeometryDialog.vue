@@ -7,11 +7,18 @@
         class="ma-7"
         :is="geometryComponent"
         :params="geometryParams"
+        @correct-data="hasErrors = !$event"
       />
       <v-divider></v-divider>
       <v-card-actions>
         <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
-        <v-btn color="blue darken-1" text @click="selectParameters">Save</v-btn>
+        <v-btn
+          :disabled="disableCreate"
+          color="blue darken-1"
+          text
+          @click="selectParameters"
+          >Create</v-btn
+        >
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -23,8 +30,15 @@ import SphereGeometryInputs from './SphereGeometryInputs';
 import ConeGeometryInputs from './ConeGeometryInputs';
 import PlaneGeometryInputs from './PlaneGeometryInputs';
 import CylinderGeometryInputs from './CylinderGeometryInputs';
-import IcosahedronGeometryInputs from './IcosahedronGeometryInputs';
+import SahedronGeometryInputs from './SahedronGeometryInputs';
+import CircleGeometryInputs from './CircleGeometryInputs';
+import RingGeometryInputs from './RingGeometryInputs';
+import OBJGeometryInputs from './OBJGeometryInputs';
+import TorusGeometryInputs from './TorusGeometryInputs';
+import TorusKnotGeometryInputs from './TorusKnotGeometryInputs';
+import TextGeometryInputs from './TextGeometryInputs';
 import Constants from '../../constants';
+import { cloneDeep } from 'lodash';
 
 export default {
   components: {
@@ -33,7 +47,13 @@ export default {
     ConeGeometryInputs,
     PlaneGeometryInputs,
     CylinderGeometryInputs,
-    IcosahedronGeometryInputs
+    SahedronGeometryInputs,
+    CircleGeometryInputs,
+    RingGeometryInputs,
+    OBJGeometryInputs,
+    TorusGeometryInputs,
+    TorusKnotGeometryInputs,
+    TextGeometryInputs
   },
   data() {
     return {
@@ -46,14 +66,27 @@ export default {
         [Constants.geometries.cone]: 'ConeGeometryInputs',
         [Constants.geometries.plane]: 'PlaneGeometryInputs',
         [Constants.geometries.cylinder]: 'CylinderGeometryInputs',
-        [Constants.geometries.icosahedron]: 'IcosahedronGeometryInputs'
-      }
+        [Constants.geometries.icosahedron]: 'SahedronGeometryInputs',
+        [Constants.geometries.tetrahedron]: 'SahedronGeometryInputs',
+        [Constants.geometries.dodecahedron]: 'SahedronGeometryInputs',
+        [Constants.geometries.octahedron]: 'SahedronGeometryInputs',
+        [Constants.geometries.circle]: 'CircleGeometryInputs',
+        [Constants.geometries.ring]: 'RingGeometryInputs',
+        [Constants.geometries.torus]: 'TorusGeometryInputs',
+        [Constants.geometries.torusKnot]: 'TorusKnotGeometryInputs',
+        [Constants.geometries.obj]: 'OBJGeometryInputs',
+        [Constants.geometries.text]: 'TextGeometryInputs'
+      },
+      hasErrors: false
     };
   },
   beforeMount() {
     this.resetParams();
   },
   computed: {
+    disableCreate() {
+      return this.hasErrors;
+    },
     dialogTitle() {
       return this.geometryType != null
         ? `${Constants.geometryNames[this.geometryType]} properties`
@@ -84,54 +117,7 @@ export default {
       });
     },
     resetParams() {
-      this.geometryParameters = {
-        [Constants.geometries.cube]: {
-          width: 1,
-          height: 1,
-          depth: 1,
-          widthSegments: 1,
-          heightSegments: 1,
-          depthSegments: 1
-        },
-        [Constants.geometries.sphere]: {
-          radius: 1,
-          widthSegments: 8,
-          heightSegments: 6,
-          phiStart: 0,
-          phiLength: Math.PI * 2,
-          thetaStart: 0,
-          thetaLength: Math.PI
-        },
-        [Constants.geometries.cone]: {
-          radius: 1,
-          height: 1,
-          radialSegments: 8,
-          heightSegments: 1,
-          openEnded: false,
-          thetaStart: 0,
-          thetaLength: Math.PI * 2
-        },
-        [Constants.geometries.plane]: {
-          width: 1,
-          height: 1,
-          widthSegments: 1,
-          heightSegments: 1
-        },
-        [Constants.geometries.cylinder]: {
-          radiusTop: 1,
-          radiusBottom: 1,
-          height: 1,
-          radialSegments: 8,
-          heightSegments: 1,
-          openEnded: false,
-          thetaStart: 0,
-          thetaLength: Math.PI * 2
-        },
-        [Constants.geometries.icosahedron]: {
-          radius: 1,
-          detail: 0
-        }
-      };
+      this.geometryParameters = cloneDeep(Constants.geometryParameters);
     }
   }
 };

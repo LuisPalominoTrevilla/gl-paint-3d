@@ -3,17 +3,21 @@
         <v-expansion-panel-header>{{field}}</v-expansion-panel-header>
         <v-expansion-panel-content>
         <v-color-picker v-if="field === 'color' || field==='emissive' || field==='specular'" :value="defaultVal" v-on:input="handler" ref="Colorinp"></v-color-picker>
-        <v-text-field v-else-if="typeof(this.defaultVal) === 'number'" v-model="current" v-on:input="handler" ref="inp"></v-text-field>
-        <v-switch v-else-if="typeof(this.defaultVal)==='boolean'" v-model="current" v-on:change="handler" ref="inp"></v-switch>
-        <v-file-input v-else-if="this.defaultVal==null" accept="image/*" label="Texture" v-model="current" v-on:change="handler"  ref="inp"></v-file-input>
-        <v-text-field v-else-if="typeof(this.defaultVal) === 'string'" v-model="current" v-on:input="handler" ref="inp"></v-text-field>
+        <v-text-field v-else-if="typeof(this.defaultVal) === 'number'" :value="defaultVal" v-on:input="handler" ref="Numberinp"></v-text-field>
+        <v-switch v-else-if="typeof(this.defaultVal)==='boolean'" :value="defaultVal" v-on:change="handler" ref="inp"></v-switch>
+        <v-select v-else-if="isText"
+        :items="getItems"
+        :value="defaultVal" 
+        v-on:input="handler" 
+        ref="inp"></v-select>
+        <v-file-input v-else accept="image/*" label="Texture" v-on:change="handler"  ref="Fileinp"></v-file-input>
         </v-expansion-panel-content>
     </v-expansion-panel>
 </template>
 
 <script>
 
-
+    import Constants from '../constants';
 
     export default {
         props:{
@@ -28,9 +32,14 @@
             }
         },
         computed:{
+            isText(){
+                return Constants[this.field];
+            },
             getDefault(){
-                console.log(this.defaultVal);
                 return this.defaultVal;
+            },
+            getItems(){
+                return Constants[this.field];
             }
         }
         ,
@@ -44,6 +53,17 @@
                 let colorRef=this.$refs.Colorinp;
                 if(colorRef){
                     this.current=(colorRef.$children[0].$children[0].color.hex);
+                }
+                else if(this.$refs.Numberinp){
+                    this.current=this.$refs.Numberinp.lazyValue!==''? parseInt(this.$refs.Numberinp.lazyValue):0;
+                }
+                else{
+                    if(this.$refs.inp){
+                        this.current=this.$refs.inp.lazyValue ? this.$refs.inp.lazyValue:false; //When is v-switch False is taken as Null
+                    }
+                    else{
+                        this.current=this.$refs.Fileinp.lazyValue? this.$refs.Fileinp.lazyValue.name : null; //For v-fileinput null cases
+                    }                    
                 }
                 if(!this.selected){
                     this.$emit("updateData",this.field,this.current);

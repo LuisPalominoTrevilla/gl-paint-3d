@@ -43,7 +43,6 @@
         ,
         computed:{
             getMaterialName(){
-                console.log("Here");
                 if(this.currentMesh){
                     let name= this.currentMesh.mesh.material.type.slice(0,-8);
                     name=name.replace(name[0],name[0].toLowerCase());

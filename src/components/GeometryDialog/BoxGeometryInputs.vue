@@ -2,21 +2,21 @@
   <div>
     <div class="d-flex">
       <v-text-field
-        v-model="params.width"
+        v-model.number="params.width"
         class="number-input"
         label="width"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.height"
+        v-model.number="params.height"
         class="number-input"
         label="height"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.depth"
+        v-model.number="params.depth"
         class="number-input"
         label="depth"
         hide-details="auto"
@@ -25,21 +25,21 @@
     </div>
     <div class="d-flex">
       <v-text-field
-        v-model="params.widthSegments"
+        v-model.number="params.widthSegments"
         class="number-input"
         label="widthSegments"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.heightSegments"
+        v-model.number="params.heightSegments"
         class="number-input"
         label="heightSegments"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model="params.depthSegments"
+        v-model.number="params.depthSegments"
         class="number-input"
         label="depthSegments"
         hide-details="auto"

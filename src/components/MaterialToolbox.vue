@@ -77,9 +77,9 @@ export default {
           let meshJson={};
           Object.keys(this.materialData[keyVal]).forEach( field => {
             if(field==='color'){
-              let r=this.currentMeshMaterial.prevColor.r;
-              let g=this.currentMeshMaterial.prevColor.g;
-              let b=this.currentMeshMaterial.prevColor.b;
+              let r=this.currentMeshMaterial.mesh.prevColor.r;
+              let g=this.currentMeshMaterial.mesh.prevColor.g;
+              let b=this.currentMeshMaterial.mesh.prevColor.b;
               let rgbString = this.rgbToHex(r*255,g*255,b*255);
               meshJson[field]=rgbString; 
             }
@@ -117,7 +117,6 @@ export default {
         this.materialData[key][field]=value;
       },
       updateMaterialData(key,field,value){
-        console.log(key,field,value);
         let MeshFields = JSON.parse(JSON.stringify(this.getMeshMaterial));
         MeshFields[key][field]=value;
         this.selectedMeshMaterial=MeshFields[key];

@@ -4,27 +4,42 @@ import Constants from '../constants';
 export default {
     create(type,params){
         if(params.color){
-            console.log(params.color);
-            let colorValue = parseInt ( params.color.replace("#","0x"), 16 );
-            params.color = colorValue;
+            if(typeof(params.color)=== 'string'){
+                let colorValue = parseInt ( params.color.replace("#","0x"), 16 );
+                params.color = colorValue;
+            }
         }
         if(params.emissive){
-            console.log(params.emissive);
-            let colorValue = parseInt ( params.emissive.replace("#","0x"), 16 );
-            params.emissive = colorValue;
+            if(typeof(params.emissive)=== 'string'){
+                let colorValue = parseInt ( params.emissive.replace("#","0x"), 16 );
+                params.emissive = colorValue;
+            }
         }
         if(params.specular){
-            console.log(params.specular);
-            let colorValue = parseInt ( params.specular.replace("#","0x"), 16 );
-            params.specular = colorValue;
+            if(typeof(params.specular)=== 'string'){
+                let colorValue = parseInt ( params.specular.replace("#","0x"), 16 );
+                params.specular = colorValue;
+            }
         }
         
-        /*
         Object.keys(params).forEach( param => {
-            if(!isNaN(params[param])){
-                params[param]=parseInt(param);
+            if(typeof(params[param]) === 'string' ){
+                if(!Constants[param]){
+                    let loader = new Three.TextureLoader();
+                    loader.load(
+                        'textures/Render3.png',
+                        function(texture){
+                            console.log("Here ", texture);
+                        },
+                        undefined,
+                        function(error){
+                            console.log(error);
+                        }
+                    )
+                    params[param]=null;
+                }
             }
-        });*/
+        });
         switch(type){
             case Constants.materials.lineBasic:{
                 return new Three.LineBasicMaterial(params);

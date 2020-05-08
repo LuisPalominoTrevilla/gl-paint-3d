@@ -2,30 +2,44 @@
   <div>
     <div class="d-flex">
       <v-text-field
-        v-model.number="params.width"
+        v-model.number="params.radius"
         class="number-input"
-        label="width"
+        label="radius"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model.number="params.height"
+        v-model.number="params.tube"
         class="number-input"
-        label="height"
+        label="tube"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model.number="params.widthSegments"
+        v-model.number="params.radialSegments"
         class="number-input"
-        label="widthSegments"
+        label="radialSegments"
         hide-details="auto"
         type="number"
       />
       <v-text-field
-        v-model.number="params.heightSegments"
+        v-model.number="params.tubularSegments"
         class="number-input"
-        label="heightSegments"
+        label="tubularSegments"
+        hide-details="auto"
+        type="number"
+      />
+      <v-text-field
+        v-model.number="params.p"
+        class="number-input"
+        label="params.p"
+        hide-details="auto"
+        type="number"
+      />
+      <v-text-field
+        v-model.number="params.q"
+        class="number-input"
+        label="params.q"
         hide-details="auto"
         type="number"
       />
