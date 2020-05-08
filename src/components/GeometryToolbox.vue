@@ -1,5 +1,5 @@
 <template>
-  <div class="toolbox card">
+  <div class="toolbox">
     <h3 class="title">Geometries</h3>
     <v-row>
       <v-col cols="6" v-for="geometry in geometries" :key="geometry">

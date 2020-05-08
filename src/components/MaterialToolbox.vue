@@ -1,8 +1,8 @@
 <template>
-  <div class="toolbox card">
+  <div class="toolbox">
     <h3>Material</h3>
     <v-row>
-      <v-col v-if="!selectedMaterial">
+      <v-col v-if="!selectedMaterial && !isGroup">
         <v-select
           :items="materials"
           label="Choose"
@@ -326,13 +326,20 @@ export default {
     MaterialTool
   },
   props: {
-    selectedMaterial: { type: Boolean },
     currentMeshMaterial: { type: Object },
     currentMeshMaterialName: { type: String }
   },
   computed: {
+    selectedMaterial() {
+      return this.currentMeshMaterial != null;
+    },
+    isGroup() {
+      return (
+        this.currentMeshMaterial != null && this.currentMeshMaterial.isGroup
+      );
+    },
     getMaterialName() {
-      if (this.currentMeshMaterial) {
+      if (this.currentMeshMaterial && !this.currentMeshMaterial.isGroup) {
         let matName = this.currentMeshMaterial.mesh.material.type.slice(0, -8);
         matName = matName.replace(matName[0], matName[0].toLowerCase());
         return matName;

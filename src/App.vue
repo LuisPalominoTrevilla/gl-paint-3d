@@ -4,11 +4,12 @@
       <div class="top-container">
         <div class="left">
           <figure-tabs
+            ref="figureComp"
+            :appMode="appMode"
+            :selectedEditState="editingState"
+            :currentMesh="selectedMesh"
             @create-mesh="createMesh"
             @updateMesh="updateMesh"
-            ref="figureComp"
-            :selected="isSelected"
-            :currentMesh="selectedMesh"
           />
         </div>
         <div class="center">
@@ -92,9 +93,6 @@ export default {
       return this.selectedMeshIdx === null
         ? null
         : this.meshWrappers[this.selectedMeshIdx];
-    },
-    isSelected() {
-      return this.selectedMesh !== null;
     }
   },
   beforeMount() {
@@ -218,6 +216,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.main-container {
+  position: relative;
 }
 
 .top-container {

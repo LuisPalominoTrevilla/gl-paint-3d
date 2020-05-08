@@ -39,7 +39,7 @@ class MeshWrapper {
       const mesh = selectMeshes.pop();
       if (mesh instanceof Three.Mesh) {
         mesh.prevColor = mesh.material.color.clone();
-        mesh.material.color.set(0xc44f36);
+        mesh.material.color.set(0xfcf803);
       } else {
         selectMeshes.push(...mesh.children);
       }
